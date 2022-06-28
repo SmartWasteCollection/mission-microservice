@@ -1,51 +1,55 @@
 package swc.microservice.mission.usecases
 
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 import swc.microservice.mission.entities.Booking
 import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.usecases.RequestBuilder.CLIENT
 import swc.microservice.mission.usecases.RequestBuilder.buildRequest
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
-import java.util.concurrent.CompletableFuture
 
-fun getBookings(typeOfWaste: TypeOfWaste): CompletableFuture<List<Booking>> =
-    CLIENT.sendAsync(
-        buildRequest(Method.GET, service = Service.BOOKING, route = "/pendingBookings"),
-        HttpResponse.BodyHandlers.ofString()
-    ).thenApply { r -> deserialize(r.body()) }
+suspend fun getBookings(typeOfWaste: TypeOfWaste): List<Booking> =
+    CLIENT.request(buildRequest(HttpMethod.Get, service = Service.BOOKING, route = "/pendingBookings"))
+        .body<List<Booking>>()
+        .filter { it.typeOfWaste == typeOfWaste }
+
 
 fun deserialize(s: String): List<Booking> = TODO()
 
 object RequestBuilder {
-    val CLIENT: HttpClient = HttpClient.newHttpClient()
+    val CLIENT: HttpClient = HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json(Json {
+                prettyPrint = true
+                isLenient = true
+            })
+        }
+    }
     private const val BASE_URL: String = "http://swc/"
     private val SERVICES: Map<Service, String> = mapOf(
         Pair(Service.BOOKING, "booking")
     )
-    private fun request(method: Method, url: String, payload: String? = null): HttpRequest =
-        HttpRequest.newBuilder()
-            .uri(URI.create(url))
-            .method(method.toString(), HttpRequest.BodyPublishers.ofString(payload ?: ""))
-            .build()
 
-    fun buildRequest(method: Method, baseUrl: String = BASE_URL, service: Service, route: String): HttpRequest =
-        request(method, baseUrl + SERVICES[service] + route)
+    fun buildRequest(httpMethod: HttpMethod, baseUrl: String = BASE_URL, service: Service, route: String): HttpRequestBuilder {
+        val builder = HttpRequestBuilder()
+        builder.method = httpMethod
+        builder.url {
+            protocol = URLProtocol.HTTP
+            host = baseUrl
+            path(SERVICES[service] + route)
+        }
+        builder.headers {
+            append(HttpHeaders.Accept, "application/json")
+        }
+        return builder
+    }
 }
 
 enum class Service {
     BOOKING
-}
-
-enum class Method {
-    GET, PUT, POST, DELETE
-
-    override fun toString(): String = when (this) {
-        GET -> "GET"
-        PUT -> "PUT"
-        POST -> "POST"
-        DELETE -> "DELETE"
-        else -> ""
-    }
 }
