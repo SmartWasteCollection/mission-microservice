@@ -10,13 +10,15 @@ fun computeOrdinaryMission(dumpsterId: String): Mission<OrdinaryWaste> = TODO()
 suspend fun computeExtraordinaryMission(
     typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
     bookingsRetriever: suspend (TypeOfWaste<ExtraordinaryWaste>) -> List<Booking<ExtraordinaryWaste>> =
-        { getBookings(typeOfWaste) }
+        { getPendingBookings(typeOfWaste) },
+    bookingsUpdater: suspend (List<Booking<ExtraordinaryWaste>>) -> Unit =
+        { updateBookings(bookingsRetriever(typeOfWaste)) }
 ): Mission<ExtraordinaryWaste> =
     Mission(
         date = Date(),
         typeOfWaste = typeOfWaste,
         typeOfMission = TypeOfMission.EXTRAORDINARY,
         missionSteps = bookingsRetriever(typeOfWaste)
-            .take(MAX_EXTRAORDINARY_MISSION_STEPS)
+            .also { bookingsUpdater(it) }
             .map { MissionStep(it.position) }
     )
