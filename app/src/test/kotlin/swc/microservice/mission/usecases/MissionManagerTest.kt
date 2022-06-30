@@ -3,7 +3,12 @@ package swc.microservice.mission.usecases
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
-import swc.microservice.mission.entities.*
+import swc.microservice.mission.entities.Booking
+import swc.microservice.mission.entities.BookingStatus
+import swc.microservice.mission.entities.ExtraordinaryWaste
+import swc.microservice.mission.entities.Position
+import swc.microservice.mission.entities.TypeOfMission
+import swc.microservice.mission.entities.TypeOfWaste
 
 class MissionManagerTest : FreeSpec({
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
@@ -16,8 +21,10 @@ class MissionManagerTest : FreeSpec({
         Booking("5", TypeOfWaste(ExtraordinaryWaste.CLOTHES), position),
         Booking("6", TypeOfWaste(ExtraordinaryWaste.IRON), position),
     )
+
     fun bookingsSupplier(typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): List<Booking<ExtraordinaryWaste>> =
         dummyBookings.filter { it.typeOfWaste == typeOfWaste }
+
     fun bookingsUpdater(bookings: List<Booking<ExtraordinaryWaste>>) {
         dummyBookings = bookings.map { Booking(it.id, it.typeOfWaste, it.position, BookingStatus.REQUESTED) }
     }
@@ -38,7 +45,7 @@ class MissionManagerTest : FreeSpec({
             }
             "the bookings inserted in the mission should be updated" {
                 dummyBookings.forEach { it.status shouldBe BookingStatus.REQUESTED }
-                dummyBookings.forEach { it.typeOfWaste shouldBe typeOfWaste}
+                dummyBookings.forEach { it.typeOfWaste shouldBe typeOfWaste }
             }
         }
     }

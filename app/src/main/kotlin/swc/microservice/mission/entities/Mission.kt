@@ -2,7 +2,7 @@ package swc.microservice.mission.entities
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import java.util.*
+import java.util.Date
 
 @Serializable
 data class Mission<T : Waste>(
@@ -14,9 +14,10 @@ data class Mission<T : Waste>(
     val missionSteps: List<MissionStep>
 ) {
     val missionId: String = truckId +
-            date.toString() +
-            typeOfWaste.toString() +
-            typeOfMission.toString() +
-            missionSteps.toString()
+        date.toString() +
+        typeOfWaste.toString() +
+        typeOfMission.toString() +
+        missionSteps.toString()
+
     fun isCompleted(): Boolean = missionSteps.all { it.completed }
 }
