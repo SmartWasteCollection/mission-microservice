@@ -38,6 +38,7 @@ class MissionManagerTest : FreeSpec({
             }
             "the bookings inserted in the mission should be updated" {
                 dummyBookings.forEach { it.status shouldBe BookingStatus.REQUESTED }
+                dummyBookings.forEach { it.typeOfWaste shouldBe typeOfWaste}
             }
         }
     }
