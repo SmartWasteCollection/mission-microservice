@@ -1,11 +1,11 @@
 package swc.microservice.mission.entities
 
-interface WasteName
+sealed interface Waste
 
-enum class OrdinaryWasteName : WasteName {
+enum class OrdinaryWaste : Waste {
     UNSORTED, PLASTICS_ALUMINIUM, ORGANIC, GLASS, PAPER
 }
 
-enum class ExtraordinaryWasteName : WasteName {
+enum class ExtraordinaryWaste : Waste {
     TWIGS, WASTE_OIL, IRON, ELECTRONICS, CLOTHES, OTHER
 }
