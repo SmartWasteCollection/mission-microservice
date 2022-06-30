@@ -11,13 +11,24 @@ on:
 jobs:
   build-and-test:
     name: Build and Test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java_version: [ 15, 17 ]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           persist-credentials: false
           fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: adopt
+          java-version: ${{ matrix.java_version }}
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
       - name: Build
         run: ./gradlew build
       - name: Test
