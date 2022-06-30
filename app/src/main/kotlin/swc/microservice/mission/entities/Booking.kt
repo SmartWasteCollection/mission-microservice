@@ -7,7 +7,7 @@ data class Booking<T : Waste>(
     val id: String,
     val typeOfWaste: TypeOfWaste<T>,
     val position: Position,
-    val status: BookingStatus
+    val status: BookingStatus = BookingStatus.PENDING
 )
 
 @Serializable

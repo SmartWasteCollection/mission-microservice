@@ -8,7 +8,7 @@ import swc.microservice.mission.entities.*
 class MissionManagerTest : FreeSpec({
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
     val position = Position(42, 42)
-    val bookings = listOf(
+    var dummyBookings = listOf(
         Booking("1", typeOfWaste, position),
         Booking("2", typeOfWaste, position),
         Booking("3", typeOfWaste, position),
@@ -17,21 +17,27 @@ class MissionManagerTest : FreeSpec({
         Booking("6", TypeOfWaste(ExtraordinaryWaste.IRON), position),
     )
     fun bookingsSupplier(typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): List<Booking<ExtraordinaryWaste>> =
-        bookings.filter { it.typeOfWaste == typeOfWaste }
+        dummyBookings.filter { it.typeOfWaste == typeOfWaste }
+    fun bookingsUpdater(bookings: List<Booking<ExtraordinaryWaste>>) {
+        dummyBookings = bookings.map { Booking(it.id, it.typeOfWaste, it.position, BookingStatus.REQUESTED) }
+    }
 
     "The mission manager" - {
         "when computing an extraordinary mission" - {
-            val mission = computeExtraordinaryMission(typeOfWaste) { bookingsSupplier(it) }
+            val mission = computeExtraordinaryMission(typeOfWaste, ::bookingsSupplier) { bookingsUpdater(it) }
             "should produce the correct type of mission" {
                 mission.typeOfMission shouldBe TypeOfMission.EXTRAORDINARY
                 mission.typeOfWaste shouldBe typeOfWaste
             }
-            "the steps should contain the specified type of waste" - {
+            "the steps should contain the specified type of waste" {
                 mission.missionSteps.size shouldBeLessThan MAX_EXTRAORDINARY_MISSION_STEPS
-                mission.missionSteps.size shouldBe bookings
+                mission.missionSteps.size shouldBe dummyBookings
                     .filter { it.typeOfWaste == typeOfWaste }
                     .take(MAX_EXTRAORDINARY_MISSION_STEPS).size
                 mission.missionSteps.forEach { it.completed shouldBe false }
+            }
+            "the bookings inserted in the mission should be updated" {
+                dummyBookings.forEach { it.status shouldBe BookingStatus.REQUESTED }
             }
         }
     }
