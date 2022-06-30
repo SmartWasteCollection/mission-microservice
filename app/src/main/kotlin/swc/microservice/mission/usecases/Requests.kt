@@ -10,16 +10,17 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import swc.microservice.mission.entities.Booking
 import swc.microservice.mission.entities.TypeOfWaste
+import swc.microservice.mission.entities.Waste
 import swc.microservice.mission.usecases.RequestBuilder.CLIENT
 import swc.microservice.mission.usecases.RequestBuilder.buildRequest
 
-suspend fun getBookings(typeOfWaste: TypeOfWaste): List<Booking> =
+suspend fun <T : Waste> getBookings(typeOfWaste: TypeOfWaste<T>): List<Booking<T>> =
     CLIENT.request(buildRequest(HttpMethod.Get, service = Service.BOOKING, route = "/pendingBookings"))
-        .body<List<Booking>>()
+        .body<List<Booking<T>>>()
         .filter { it.typeOfWaste == typeOfWaste }
 
 
-fun deserialize(s: String): List<Booking> = TODO()
+fun <T : Waste> deserialize(s: String): List<Booking<T>> = TODO()
 
 object RequestBuilder {
     val CLIENT: HttpClient = HttpClient(CIO) {
