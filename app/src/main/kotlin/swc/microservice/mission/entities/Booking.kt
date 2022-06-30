@@ -6,5 +6,11 @@ import kotlinx.serialization.Serializable
 data class Booking<T : Waste>(
     val id: String,
     val typeOfWaste: TypeOfWaste<T>,
-    val position: Position
+    val position: Position,
+    val status: BookingStatus
 )
+
+@Serializable
+enum class BookingStatus {
+    PENDING, REQUESTED, FULFILLED
+}

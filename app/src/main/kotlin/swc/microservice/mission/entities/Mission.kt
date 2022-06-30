@@ -1,9 +1,13 @@
 package swc.microservice.mission.entities
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import java.util.*
 
+@Serializable
 data class Mission<T : Waste>(
     var truckId: String? = null,
+    @Contextual
     val date: Date,
     val typeOfWaste: TypeOfWaste<T>,
     val typeOfMission: TypeOfMission,
