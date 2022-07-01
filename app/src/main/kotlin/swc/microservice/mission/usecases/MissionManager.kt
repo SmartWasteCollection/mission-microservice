@@ -7,7 +7,7 @@ import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
-import java.util.Date
+import java.time.LocalDate
 
 const val MAX_EXTRAORDINARY_MISSION_STEPS: Int = 5
 
@@ -21,7 +21,7 @@ suspend fun computeExtraordinaryMission(
         { updateBookings(bookingsRetriever(typeOfWaste)) }
 ): Mission<ExtraordinaryWaste> =
     Mission(
-        date = Date(),
+        date = LocalDate.now(),
         typeOfWaste = typeOfWaste,
         typeOfMission = TypeOfMission.EXTRAORDINARY,
         missionSteps = bookingsRetriever(typeOfWaste)
