@@ -3,13 +3,13 @@
  */
 package swc.microservice.mission
 
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+import org.springframework.boot.runApplication
+
+@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class])
+open class MissionMicroservice
 
 fun main() {
-    println(App().greeting)
+    runApplication<MissionMicroservice>()
 }
