@@ -1,14 +1,19 @@
 package swc.microservice.mission.entities
 
-import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import java.util.Date
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import java.time.LocalDate
+import java.util.*
 
 @Serializable
 data class Mission<T : Waste>(
     var truckId: String? = null,
-    @Contextual
-    val date: Date,
+    @Serializable(with = DateSerializer::class)
+    val date: LocalDate,
     val typeOfWaste: TypeOfWaste<T>,
     val typeOfMission: TypeOfMission,
     val missionSteps: List<MissionStep>
@@ -20,4 +25,16 @@ data class Mission<T : Waste>(
         missionSteps.toString()
 
     fun isCompleted(): Boolean = missionSteps.all { it.completed }
+}
+
+object DateSerializer : KSerializer<LocalDate> {
+    override val descriptor = PrimitiveSerialDescriptor("Date", PrimitiveKind.STRING)
+
+    override fun deserialize(decoder: Decoder): LocalDate {
+        return LocalDate.parse(decoder.decodeString())
+    }
+
+    override fun serialize(encoder: Encoder, value: LocalDate) {
+        encoder.encodeString(value.toString())
+    }
 }
