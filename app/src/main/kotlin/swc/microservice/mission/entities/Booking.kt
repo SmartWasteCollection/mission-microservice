@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Booking<T : Waste>(
-    val id: String,
+    val _id: String,
     val typeOfWaste: TypeOfWaste<T>,
     val position: Position,
     val status: BookingStatus = BookingStatus.PENDING
