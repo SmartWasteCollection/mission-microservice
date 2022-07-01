@@ -26,7 +26,7 @@ class MissionManagerTest : FreeSpec({
         dummyBookings.filter { it.typeOfWaste == typeOfWaste }
 
     fun bookingsUpdater(bookings: List<Booking<ExtraordinaryWaste>>) {
-        dummyBookings = bookings.map { Booking(it.id, it.typeOfWaste, it.position, BookingStatus.REQUESTED) }
+        dummyBookings = bookings.map { Booking(it._id, it.typeOfWaste, it.position, BookingStatus.REQUESTED) }
     }
 
     "The mission manager" - {
