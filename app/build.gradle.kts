@@ -5,7 +5,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.3.0"
     id("org.springframework.boot") version "2.7.1"
-    // Apply the application plugin to add support for building a CLI application in Java.
+    jacoco
     application
 }
 
@@ -41,6 +41,21 @@ application {
     mainClass.set("swc.microservice.mission.AppKt")
 }
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+    }
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
 }
