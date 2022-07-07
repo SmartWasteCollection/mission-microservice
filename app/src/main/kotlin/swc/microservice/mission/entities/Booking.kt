@@ -1,8 +1,5 @@
 package swc.microservice.mission.entities
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Booking<T : Waste>(
     val _id: String,
     val typeOfWaste: TypeOfWaste<T>,
@@ -10,7 +7,6 @@ data class Booking<T : Waste>(
     val status: BookingStatus = BookingStatus.PENDING
 )
 
-@Serializable
 enum class BookingStatus {
     PENDING, REQUESTED, FULFILLED
 }
