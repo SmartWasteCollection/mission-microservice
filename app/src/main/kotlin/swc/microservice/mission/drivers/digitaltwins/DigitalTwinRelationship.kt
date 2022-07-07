@@ -1,4 +1,5 @@
 package swc.microservice.mission.drivers.digitaltwins
 
-enum class Relationship {
+enum class DigitalTwinRelationship {
+    TO_TRUCK, TO_STEP
 }
