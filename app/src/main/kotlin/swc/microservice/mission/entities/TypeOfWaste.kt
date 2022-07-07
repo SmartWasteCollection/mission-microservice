@@ -1,6 +1,6 @@
 package swc.microservice.mission.entities
 
-data class TypeOfWaste<T : Waste>(val wasteName: T)
+data class TypeOfWaste<out T : Waste>(val wasteName: T)
 
 fun String.toTypeOfWaste(): TypeOfWaste<ExtraordinaryWaste> = TypeOfWaste(
     when (this.uppercase()) {
