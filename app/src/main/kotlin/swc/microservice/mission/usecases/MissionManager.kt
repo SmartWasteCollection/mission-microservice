@@ -1,30 +1,15 @@
 package swc.microservice.mission.usecases
 
-import swc.microservice.mission.entities.Booking
 import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
-import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
-import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
-import java.time.LocalDate
+import swc.microservice.mission.entities.Waste
 
-const val MAX_EXTRAORDINARY_MISSION_STEPS: Int = 5
+interface MissionManager {
+    fun computeOrdinaryMission(dumpsterId: String): Mission<OrdinaryWaste>
 
-fun computeOrdinaryMission(dumpsterId: String): Mission<OrdinaryWaste> = TODO()
+    fun computeExtraordinaryMission(typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): Mission<ExtraordinaryWaste>
 
-suspend fun computeExtraordinaryMission(
-    typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
-    bookingsRetriever: suspend (TypeOfWaste<ExtraordinaryWaste>) -> List<Booking<ExtraordinaryWaste>> =
-        { getPendingBookings(typeOfWaste) },
-    bookingsUpdater: suspend (List<Booking<ExtraordinaryWaste>>) -> Unit =
-        { updateBookings(bookingsRetriever(typeOfWaste)) }
-): Mission<ExtraordinaryWaste> =
-    Mission(
-        date = LocalDate.now(),
-        typeOfWaste = typeOfWaste,
-        typeOfMission = TypeOfMission.EXTRAORDINARY,
-        missionSteps = bookingsRetriever(typeOfWaste)
-            .also { bookingsUpdater(it) }
-            .map { MissionStep(it.position) }
-    )
+    fun <T : Waste> completeMissionStep(missionId: String): Mission<T>
+}
