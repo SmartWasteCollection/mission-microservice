@@ -1,10 +1,11 @@
 package swc.microservice.mission.usecases.managers
 
 import swc.microservice.mission.entities.Booking
-import swc.microservice.mission.entities.Waste
 
 interface BookingManager {
-    fun getBookings(): List<Booking<Waste>>
+    fun getBookings(): List<Booking>
 
-    fun updateBooking(bookingId: String): Booking<Waste>
+    fun requestBooking(bookingId: String)
+
+    fun fulfillBooking(bookingId: String)
 }

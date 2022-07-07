@@ -1,8 +1,8 @@
 package swc.microservice.mission.entities
 
-data class Booking<out T : Waste>(
+data class Booking(
     val bookingId: String,
-    val typeOfWaste: TypeOfWaste<T>,
+    val typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
     val position: Position,
     val status: BookingStatus = BookingStatus.PENDING
 )
