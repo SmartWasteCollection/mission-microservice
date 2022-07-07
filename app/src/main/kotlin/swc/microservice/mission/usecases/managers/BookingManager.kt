@@ -5,7 +5,5 @@ import swc.microservice.mission.entities.Booking
 interface BookingManager {
     fun getBookings(): List<Booking>
 
-    fun requestBooking(bookingId: String)
-
-    fun fulfillBooking(bookingId: String)
+    fun updateBooking(booking: Booking)
 }
