@@ -14,12 +14,14 @@ repositories {
 }
 
 val kotestVersion: String by project
+val jacksonVersion: String by project
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
     implementation("com.azure:azure-digitaltwins-core:1.2.3")
     implementation("com.azure:azure-identity:1.5.2")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
