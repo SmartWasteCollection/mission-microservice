@@ -3,7 +3,6 @@ package swc.microservice.mission.adapters
 import swc.microservice.mission.adapters.MissionPresentation.Values.COMPLETED
 import swc.microservice.mission.adapters.MissionPresentation.Values.DATE
 import swc.microservice.mission.adapters.MissionPresentation.Values.METADATA
-import swc.microservice.mission.adapters.MissionPresentation.Values.MISSION_MODEL
 import swc.microservice.mission.adapters.MissionPresentation.Values.MISSION_STEP
 import swc.microservice.mission.adapters.MissionPresentation.Values.MISSION_TRUCK
 import swc.microservice.mission.adapters.MissionPresentation.Values.MODEL
@@ -15,6 +14,7 @@ import swc.microservice.mission.adapters.MissionPresentation.Values.TYPE_OF_WAST
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinRelationship
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinRelationship.TO_STEP
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinRelationship.TO_TRUCK
+import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.MISSION_MODEL_ID
 import swc.microservice.mission.entities.Mission
 
 object MissionPresentation {
@@ -23,7 +23,6 @@ object MissionPresentation {
 
         const val METADATA = "\$metadata"
         const val MODEL = "\$model"
-        const val MISSION_MODEL = "dtmi:swc:Mission;1"
         const val DATE = "Date"
         const val TYPE_OF_WASTE = "TypeOfWaste"
         const val TYPE_OF_MISSION = "TypeOfMission"
@@ -41,7 +40,7 @@ object MissionPresentation {
          * Gets a json string from a [Mission].
          */
         fun Mission<*>.toJsonString(): String = json(
-            Pair(METADATA, json(Pair(MODEL, "\"$MISSION_MODEL\""))),
+            Pair(METADATA, json(Pair(MODEL, "\"$MISSION_MODEL_ID\""))),
             Pair(DATE, this.date),
             Pair(TYPE_OF_WASTE, this.typeOfWaste),
             Pair(TYPE_OF_MISSION, this.typeOfMission),
