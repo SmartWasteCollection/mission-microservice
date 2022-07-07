@@ -8,5 +8,5 @@ data class Booking<out T : Waste>(
 )
 
 enum class BookingStatus {
-    PENDING, REQUESTED, FULFILLED
+    PENDING, ASSIGNED, COMPLETED
 }
