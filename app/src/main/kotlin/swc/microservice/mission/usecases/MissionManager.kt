@@ -7,7 +7,7 @@ import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.entities.Waste
 
 interface MissionManager {
-    fun computeOrdinaryMission(dumpsterId: String): Mission<OrdinaryWaste>
+    fun computeOrdinaryMission(dumpsterId: String?): Mission<OrdinaryWaste>
 
     fun computeExtraordinaryMission(typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): Mission<ExtraordinaryWaste>
 
