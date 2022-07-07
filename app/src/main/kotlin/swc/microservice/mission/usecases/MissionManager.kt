@@ -11,5 +11,5 @@ interface MissionManager {
 
     fun computeExtraordinaryMission(typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): Mission<ExtraordinaryWaste>
 
-    fun <T : Waste> completeMissionStep(missionId: String): Mission<T>
+    fun completeMissionStep(missionId: String): Mission<Waste>?
 }
