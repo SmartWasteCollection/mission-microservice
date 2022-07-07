@@ -10,6 +10,7 @@ import swc.microservice.mission.entities.Position
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.usecases.managers.MissionManager
 
 class MissionUseCasesTest : FreeSpec({
     var missions: List<Mission<Waste>> = listOf()

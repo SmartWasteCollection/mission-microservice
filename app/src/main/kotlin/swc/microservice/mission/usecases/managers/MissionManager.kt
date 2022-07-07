@@ -1,4 +1,4 @@
-package swc.microservice.mission.usecases
+package swc.microservice.mission.usecases.managers
 
 import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
