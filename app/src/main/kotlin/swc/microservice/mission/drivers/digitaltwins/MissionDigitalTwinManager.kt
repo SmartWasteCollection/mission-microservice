@@ -15,6 +15,13 @@ class MissionDigitalTwinManager {
         .endpoint(ENDPOINT)
         .buildClient()
 
+    fun getMission(missionId: String): String? = try {
+        client.getDigitalTwin(missionId, String::class.java)
+    } catch (e: Exception) {
+        println(e)
+        null
+    }
+
     fun createMission(mission: Mission<*>): String {
         client.createOrReplaceDigitalTwin(mission.missionId, mission.toJsonString(), String::class.java)
         return mission.missionId
@@ -40,5 +47,11 @@ class MissionDigitalTwinManager {
             String::class.java
         )
         return relationshipId
+    }
+
+    fun deleteMission(missionId: String): String? {
+        val mission = getMission(missionId)
+        client.deleteDigitalTwin(missionId)
+        return mission
     }
 }
