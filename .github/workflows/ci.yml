@@ -2,6 +2,7 @@ name: Build and Test
 
 on:
   workflow_dispatch:
+  workflow_call:
   pull_request:
   push:
     branches:
@@ -13,9 +14,9 @@ jobs:
     name: Build and Test
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
+        os: [ ubuntu, macos, windows ]
         java_version: [ 15, 17 ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
