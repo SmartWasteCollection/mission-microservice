@@ -1,7 +1,6 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.7.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.3.0"
     id("org.springframework.boot") version "2.7.1"
@@ -24,7 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
     implementation("com.azure:azure-digitaltwins-core:1.2.3")
-    implementation("com.azure:azure-identity:1.5.2")
+    implementation("com.azure:azure-identity:1.5.3")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
