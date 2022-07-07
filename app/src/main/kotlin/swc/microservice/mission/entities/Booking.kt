@@ -1,9 +1,15 @@
 package swc.microservice.mission.entities
 
+import java.time.LocalDate
+
 data class Booking(
-    val bookingId: String,
+    val _id: String,
+    val userId: String,
     val typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
-    val position: Position,
+    val datetime: LocalDate,
+    val city: String,
+    val province: String,
+    val address: String,
     val status: BookingStatus = BookingStatus.PENDING
 )
 
