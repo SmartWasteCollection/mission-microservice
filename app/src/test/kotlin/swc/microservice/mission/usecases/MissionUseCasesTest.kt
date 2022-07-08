@@ -53,12 +53,17 @@ class MissionUseCasesTest : FreeSpec({
             return missions.find { it.missionId == missionId }
         }
 
-        override fun assignTruckToMission(missionId: String, truck: Truck): Mission<Waste>? {
-            missions.find { it.missionId == missionId }?.truckId = truck.id
-            return missions.find { it.missionId == missionId }
-        }
-
         override fun getMissions(): List<Mission<Waste>> = missions
+
+        override fun updateMission(mission: Mission<Waste>): Mission<Waste>? {
+            missions = missions.map {
+                when (it.missionId) {
+                    mission.missionId -> mission
+                    else -> it
+                }
+            }
+            return missions.find { it.missionId == mission.missionId }
+        }
     }
 
     "When performing the mission use cases" - {

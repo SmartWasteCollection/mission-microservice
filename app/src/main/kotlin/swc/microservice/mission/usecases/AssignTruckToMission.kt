@@ -7,5 +7,6 @@ import swc.microservice.mission.usecases.managers.MissionManager
 
 class AssignTruckToMission(private val missionId: String, private val truck: Truck) : MissionUseCase<Mission<Waste>?> {
     override fun execute(manager: MissionManager): Mission<Waste>? =
-        manager.assignTruckToMission(this.missionId, this.truck)
+        manager.getMissions().find { it.missionId == missionId }.apply { this?.truckId = truck.id }
+            ?.let { manager.updateMission(it) }
 }
