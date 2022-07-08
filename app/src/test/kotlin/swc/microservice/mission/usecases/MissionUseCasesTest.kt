@@ -6,8 +6,11 @@ import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
+import swc.microservice.mission.entities.Position
+import swc.microservice.mission.entities.Truck
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
+import swc.microservice.mission.entities.Volume
 import swc.microservice.mission.entities.Waste
 import swc.microservice.mission.usecases.managers.MissionManager
 
@@ -21,6 +24,7 @@ class MissionUseCasesTest : FreeSpec({
         missionSteps = listOf(MissionStep(collectionPointId))
     )
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
+    val position = Position(0L, 0L)
 
     fun extraordinaryMission(
         typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
@@ -48,6 +52,13 @@ class MissionUseCasesTest : FreeSpec({
             }
             return missions.find { it.missionId == missionId }
         }
+
+        override fun assignTruckToMission(missionId: String, truck: Truck): Mission<Waste>? {
+            missions.find { it.missionId == missionId }?.truckId = truck.id
+            return missions.find { it.missionId == missionId }
+        }
+
+        override fun getMissions(): List<Mission<Waste>> = missions
     }
 
     "When performing the mission use cases" - {
@@ -78,6 +89,20 @@ class MissionUseCasesTest : FreeSpec({
                 missions.find { it.missionId == missionId }?.typeOfMission shouldBe TypeOfMission.EXTRAORDINARY
                 missions.find { it.missionId == missionId }?.typeOfWaste shouldBe typeOfWaste
                 assert(missions.find { it.missionId == missionId }?.isCompleted() ?: false)
+            }
+        }
+        "The AssignTruckToMission use case" - {
+            "should add the truck id to the mission" {
+                val missionId = extraordinaryMission(typeOfWaste).missionId
+                val truckId = "myTruck"
+                AssignTruckToMission(
+                    missionId,
+                    Truck(truckId, position, Volume(0.0), 0.0)
+                ).execute(manager)?.truckId shouldBe truckId
+                missions.size shouldBe 2
+                missions.find { it.missionId == missionId }?.typeOfMission shouldBe TypeOfMission.EXTRAORDINARY
+                missions.find { it.missionId == missionId }?.typeOfWaste shouldBe typeOfWaste
+                missions.find { it.missionId == missionId }?.truckId shouldBe truckId
             }
         }
     }
