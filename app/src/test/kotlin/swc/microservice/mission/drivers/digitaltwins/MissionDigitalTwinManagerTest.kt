@@ -4,13 +4,11 @@ import io.kotest.core.spec.style.FreeSpec
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
-import swc.microservice.mission.entities.Position
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
 
 class MissionDigitalTwinManagerTest : FreeSpec({
-    // val id = "MissionTest${System.currentTimeMillis()}"
-    val id = "MissionTest"
+    val id = "MissionTest${System.currentTimeMillis()}"
     val manager = MissionDigitalTwinManager()
 
     "The mission manager" - {
@@ -21,7 +19,7 @@ class MissionDigitalTwinManagerTest : FreeSpec({
                     truckId = null,
                     typeOfWaste = TypeOfWaste(OrdinaryWaste.PAPER),
                     typeOfMission = TypeOfMission.ORDINARY,
-                    missionSteps = listOf(MissionStep("CollectionPoint0", Position(0L, 0L)))
+                    missionSteps = listOf(MissionStep("CollectionPoint0"))
                 )
                 val collectionPoint = Mission(
                     missionId = "CollectionPointTestIncredibleFake",
