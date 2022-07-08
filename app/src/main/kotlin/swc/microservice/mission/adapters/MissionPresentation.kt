@@ -12,14 +12,13 @@ import swc.microservice.mission.adapters.MissionPresentation.Values.TYPE_OF_WAST
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.MISSION_MODEL_ID
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
-import swc.microservice.mission.entities.TypeOfMission
+import swc.microservice.mission.entities.toTypeOfMission
 import swc.microservice.mission.entities.toTypeOfWaste
 import java.time.LocalDate
 
 object MissionPresentation {
 
     private object Values {
-
         const val STEP_RELATIONSHIP_NAME = "MissionHasStep"
         const val TRUCK_RELATIONSHIP_NAME = "MissionHasTruck"
         const val DATE = "date"
@@ -52,13 +51,16 @@ object MissionPresentation {
 
     object Deserialization {
 
+        /**
+         * Deserializes a [BasicDigitalTwin] into a [Mission].
+         */
         fun BasicDigitalTwin.toMission(relationships: List<BasicRelationship>): Mission<*> {
             return Mission(
                 missionId = this.id,
                 truckId = relationships.first { it.name == TRUCK_RELATIONSHIP_NAME }.targetId,
                 date = LocalDate.parse(this.contents[DATE].toString()),
                 typeOfWaste = this.contents[TYPE_OF_WASTE].toString().toTypeOfWaste(),
-                typeOfMission = if (this.contents[TYPE_OF_MISSION] == "ORDINARY") TypeOfMission.ORDINARY else TypeOfMission.EXTRAORDINARY,
+                typeOfMission = this.contents[TYPE_OF_MISSION].toString().toTypeOfMission(),
                 missionSteps = relationships.filter { it.name == STEP_RELATIONSHIP_NAME }.map { MissionStep(it.targetId, it.properties[COMPLETED] as Boolean) }
             )
         }
