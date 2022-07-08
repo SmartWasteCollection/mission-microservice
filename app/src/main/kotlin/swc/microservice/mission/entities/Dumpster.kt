@@ -5,14 +5,14 @@ const val TIMEOUT_SECONDS: Double = 30.0
 
 data class Dumpster(
     val id: String,
-    val type: TypeOfDumpster,
+    val dumpsterType: TypeOfDumpster,
     var isOpen: Boolean = false,
     val occupiedVolume: Volume,
     val isWorking: Boolean = true,
 ) {
     fun isAvailable(): Boolean =
         this.isWorking && this.occupiedVolume
-            .getOccupiedPercentage(this.type.size.capacity) < MAX_VOLUME_THRESHOLD
+            .getOccupiedPercentage(this.dumpsterType.size.capacity) < MAX_VOLUME_THRESHOLD
 }
 
 data class TypeOfDumpster(
