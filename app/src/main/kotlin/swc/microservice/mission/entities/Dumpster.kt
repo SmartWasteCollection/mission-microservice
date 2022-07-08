@@ -5,7 +5,6 @@ const val TIMEOUT_SECONDS: Double = 30.0
 
 data class Dumpster(
     val id: String,
-    val collectionPoint: String,
     val type: TypeOfDumpster,
     var isOpen: Boolean = false,
     val occupiedVolume: Volume,
