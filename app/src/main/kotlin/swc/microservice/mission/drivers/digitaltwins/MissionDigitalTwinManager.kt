@@ -47,6 +47,9 @@ class MissionDigitalTwinManager {
 
     fun deleteMission(missionId: String): Mission<*>? {
         val mission = getMission(missionId)
+        client.listRelationships(missionId, BasicRelationship::class.java)
+            .toList()
+            .forEach { client.deleteRelationship(missionId, it.id) }
         client.deleteDigitalTwin(missionId)
         return mission
     }
