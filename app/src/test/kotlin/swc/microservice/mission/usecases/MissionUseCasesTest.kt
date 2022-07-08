@@ -6,7 +6,6 @@ import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
-import swc.microservice.mission.entities.Position
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.entities.Waste
@@ -15,18 +14,17 @@ import swc.microservice.mission.usecases.managers.MissionManager
 class MissionUseCasesTest : FreeSpec({
     var missions: List<Mission<Waste>> = listOf()
     val collectionPointId = "collectionPoint"
-    val position = Position(0L, 0L)
     val ordinaryMission = Mission(
         missionId = "mission0",
         typeOfWaste = TypeOfWaste(OrdinaryWaste.PAPER),
         typeOfMission = TypeOfMission.ORDINARY,
-        missionSteps = listOf(MissionStep(collectionPointId, position))
+        missionSteps = listOf(MissionStep(collectionPointId))
     )
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
 
     fun extraordinaryMission(
         typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
-        missionSteps: List<MissionStep> = listOf(MissionStep(collectionPointId, position))
+        missionSteps: List<MissionStep> = listOf(MissionStep(collectionPointId))
     ): Mission<ExtraordinaryWaste> = Mission(
         missionId = "mission1",
         typeOfWaste = TypeOfWaste(typeOfWaste.wasteName),
@@ -44,7 +42,7 @@ class MissionUseCasesTest : FreeSpec({
         override fun completeMissionStep(missionId: String): Mission<Waste>? {
             missions = missions.map {
                 when (it.missionId) {
-                    missionId -> extraordinaryMission(typeOfWaste, listOf(MissionStep(collectionPointId, position, true)))
+                    missionId -> extraordinaryMission(typeOfWaste, listOf(MissionStep(collectionPointId, true)))
                     else -> it
                 }
             }
@@ -75,7 +73,7 @@ class MissionUseCasesTest : FreeSpec({
                 val missionId = extraordinaryMission(typeOfWaste).missionId
                 CompleteMissionStep(missionId).execute(
                     manager
-                ) shouldBe extraordinaryMission(typeOfWaste, listOf(MissionStep(collectionPointId, position, true)))
+                ) shouldBe extraordinaryMission(typeOfWaste, listOf(MissionStep(collectionPointId, true)))
                 missions.size shouldBe 2
                 missions.find { it.missionId == missionId }?.typeOfMission shouldBe TypeOfMission.EXTRAORDINARY
                 missions.find { it.missionId == missionId }?.typeOfWaste shouldBe typeOfWaste
