@@ -6,7 +6,7 @@ data class Mission<out T : Waste>(
     val missionId: String,
     var truckId: String? = null,
     val date: LocalDate = LocalDate.now(),
-    val typeOfWaste: TypeOfWaste<out T>,
+    val typeOfWaste: TypeOfWaste<T>,
     val typeOfMission: TypeOfMission,
     val missionSteps: List<MissionStep>
 ) {

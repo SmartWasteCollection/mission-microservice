@@ -4,8 +4,7 @@ private const val MAX_VOLUME_THRESHOLD: Double = 95.0
 const val TIMEOUT_SECONDS: Double = 30.0
 
 data class Dumpster(
-    val _id: String,
-    val collectionPoint: String,
+    val id: String,
     val dumpsterType: TypeOfDumpster,
     var isOpen: Boolean = false,
     val occupiedVolume: Volume,
