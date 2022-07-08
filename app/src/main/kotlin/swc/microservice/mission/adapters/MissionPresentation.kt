@@ -47,6 +47,16 @@ object MissionPresentation {
             missionSteps[index].collectionPointId,
             STEP_RELATIONSHIP_NAME
         ).addProperty(COMPLETED, missionSteps[index].completed)
+
+        /**
+         * Serializes a relationship of a [Mission] to a truck.
+         */
+        fun Mission<*>.truckRelationship(truckId: String): BasicRelationship = BasicRelationship(
+            "${this.missionId}-$truckId",
+            missionId,
+            truckId,
+            TRUCK_RELATIONSHIP_NAME
+        )
     }
 
     object Deserialization {
