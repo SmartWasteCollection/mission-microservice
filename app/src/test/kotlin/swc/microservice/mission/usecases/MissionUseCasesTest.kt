@@ -54,6 +54,8 @@ class MissionUseCasesTest : FreeSpec({
         }
 
         override fun getMissions(): List<Mission<Waste>> = missions
+        override fun getMissionById(missionId: String): Mission<Waste>? =
+            missions.find { it.missionId == missionId }
 
         override fun updateMission(mission: Mission<Waste>): Mission<Waste>? {
             missions = missions.map {

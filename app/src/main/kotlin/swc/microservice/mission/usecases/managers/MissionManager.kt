@@ -15,5 +15,7 @@ interface MissionManager {
 
     fun getMissions(): List<Mission<Waste>>
 
+    fun getMissionById(missionId: String): Mission<Waste>?
+
     fun updateMission(mission: Mission<Waste>): Mission<Waste>?
 }
