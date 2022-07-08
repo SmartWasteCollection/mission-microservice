@@ -50,11 +50,17 @@ open class HttpBookingManager : BookingManager {
     open fun doUpdateBooking(booking: Booking) {
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
-        CompletableFuture.completedFuture(restTemplate.exchange<Booking>(ADDRESS.plus(booking._id), HttpMethod.PUT, HttpEntity(booking, headers)).body)
+        CompletableFuture.completedFuture(
+            restTemplate.exchange<Booking>(
+                ADDRESS.plus(booking._id),
+                HttpMethod.PUT,
+                HttpEntity(booking, headers)
+            ).body
+        )
     }
 }
 
-data class DeserializableBooking(
+private data class DeserializableBooking(
     val _id: String,
     val userId: String,
     val typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
@@ -65,7 +71,7 @@ data class DeserializableBooking(
     val status: BookingStatus = BookingStatus.PENDING
 )
 
-fun String.deserializeBookings(): List<Booking> =
+private fun String.deserializeBookings(): List<Booking> =
     jacksonObjectMapper().readValue<List<DeserializableBooking>>(this).map {
         Booking(
             it._id,
