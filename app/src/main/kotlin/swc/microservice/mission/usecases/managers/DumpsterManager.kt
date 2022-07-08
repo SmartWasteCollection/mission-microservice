@@ -6,5 +6,5 @@ import swc.microservice.mission.entities.Dumpster
 interface DumpsterManager {
     fun getDumpsters(): List<Dumpster>
 
-    fun getCollectionPoints(): List<CollectionPoint>
+    fun getCollectionPoint(dumpsterId: String): CollectionPoint
 }
