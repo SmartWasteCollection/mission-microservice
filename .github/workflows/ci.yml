@@ -30,6 +30,10 @@ jobs:
           java-version: ${{ matrix.java_version }}
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+      - name: AZ Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Build
         run: ./gradlew build
       - name: Lint Check
