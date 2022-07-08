@@ -35,8 +35,7 @@ class MissionDigitalTwinManager {
      * Creates the digital twin of a [Mission] (including its relationships with trucks and collection points).
      */
     fun createMission(mission: Mission<*>): String {
-        val missionDigitalTwin = mission.toDigitalTwin()
-        val twin = createDigitalTwin(missionDigitalTwin)
+        val twin = createDigitalTwin(mission.toDigitalTwin())
         (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
         return twin.id
     }

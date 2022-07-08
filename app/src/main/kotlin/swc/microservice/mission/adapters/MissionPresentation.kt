@@ -19,8 +19,8 @@ import java.time.LocalDate
 object MissionPresentation {
 
     private object Values {
-        const val STEP_RELATIONSHIP_NAME = "MissionHasStep"
-        const val TRUCK_RELATIONSHIP_NAME = "MissionHasTruck"
+        const val STEP_RELATIONSHIP_NAME = "missionHasStep"
+        const val TRUCK_RELATIONSHIP_NAME = "missionHasTruck"
         const val DATE = "date"
         const val TYPE_OF_WASTE = "typeOfWaste"
         const val TYPE_OF_MISSION = "typeOfMission"
