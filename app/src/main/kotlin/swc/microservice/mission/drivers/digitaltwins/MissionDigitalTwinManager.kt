@@ -18,6 +18,9 @@ class MissionDigitalTwinManager {
         .endpoint(ENDPOINT)
         .buildClient()
 
+    /**
+     * Gets the digital twin of a [Mission].
+     */
     fun getMission(missionId: String): Mission<*>? = try {
         client.getDigitalTwin(missionId, BasicDigitalTwin::class.java).toMission(
             client.listRelationships(missionId, BasicRelationship::class.java).toList()
@@ -27,13 +30,25 @@ class MissionDigitalTwinManager {
         null
     }
 
+    /**
+     * Creates the digital twin of a [Mission] (including its relationships with trucks and collection points).
+     */
     fun createMission(mission: Mission<*>): String {
         val missionDigitalTwin = mission.toDigitalTwin()
-        val twin = client.createOrReplaceDigitalTwin(missionDigitalTwin.id, missionDigitalTwin, BasicDigitalTwin::class.java)
+        val twin = createDigitalTwin(missionDigitalTwin)
         (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
         return twin.id
     }
 
+    /**
+     * Deploys a [BasicDigitalTwin].
+     */
+    fun createDigitalTwin(twin: BasicDigitalTwin): BasicDigitalTwin =
+        client.createOrReplaceDigitalTwin(twin.id, twin, BasicDigitalTwin::class.java)
+
+    /**
+     * Deploys a _MissionHasStep_ relationship.
+     */
     private fun createStepRelationship(mission: Mission<*>, index: Int): String {
         val relationship = mission.stepRelationship(index)
         client.createOrReplaceRelationship(
@@ -45,12 +60,22 @@ class MissionDigitalTwinManager {
         return relationship.id
     }
 
+    /**
+     * Deletes a [Mission]'s digital twin.
+     */
     fun deleteMission(missionId: String): Mission<*>? {
         val mission = getMission(missionId)
         client.listRelationships(missionId, BasicRelationship::class.java)
             .toList()
             .forEach { client.deleteRelationship(missionId, it.id) }
-        client.deleteDigitalTwin(missionId)
+        deleteDigitalTwin(missionId)
         return mission
+    }
+
+    /**
+     * Deletes the digital twin with the specified id.
+     */
+    fun deleteDigitalTwin(id: String) {
+        client.deleteDigitalTwin(id)
     }
 }
