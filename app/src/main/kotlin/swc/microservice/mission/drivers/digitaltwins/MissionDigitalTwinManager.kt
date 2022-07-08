@@ -8,6 +8,7 @@ import com.azure.identity.AzureCliCredentialBuilder
 import swc.microservice.mission.adapters.MissionPresentation.Deserialization.toMission
 import swc.microservice.mission.adapters.MissionPresentation.Serialization.stepRelationship
 import swc.microservice.mission.adapters.MissionPresentation.Serialization.toDigitalTwin
+import swc.microservice.mission.adapters.MissionPresentation.Serialization.truckRelationship
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.ENDPOINT
 import swc.microservice.mission.entities.Mission
 
@@ -51,13 +52,41 @@ class MissionDigitalTwinManager {
      */
     private fun createStepRelationship(mission: Mission<*>, index: Int): String {
         val relationship = mission.stepRelationship(index)
-        client.createOrReplaceRelationship(
+        return client.createOrReplaceRelationship(
             mission.missionId,
             relationship.id,
             relationship,
             BasicRelationship::class.java
-        )
-        return relationship.id
+        ).id
+    }
+
+    private fun createTruckRelationship(mission: Mission<*>, truckId: String): String {
+        val relationship = mission.truckRelationship(truckId)
+        return client.createOrReplaceRelationship(
+            mission.missionId,
+            relationship.id,
+            relationship,
+            BasicRelationship::class.java
+        ).id
+    }
+
+    /**
+     * Completes a _MissionHasStep_ relationship.
+     */
+    fun completeMissionStep(mission: Mission<*>): Mission<*> {
+        val index = mission.missionSteps.indexOfFirst { !it.completed }
+        mission.missionSteps[index].completed = true
+        createStepRelationship(mission, index)
+        return mission
+    }
+
+    /**
+     * Creates a _MissionHasTruck_ relationship.
+     */
+    fun assignMissionToTruck(mission: Mission<*>, truckId: String): Mission<*> {
+        mission.truckId = truckId
+        createTruckRelationship(mission, truckId)
+        return mission
     }
 
     /**
