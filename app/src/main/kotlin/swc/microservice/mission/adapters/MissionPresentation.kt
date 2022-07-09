@@ -44,7 +44,7 @@ object MissionPresentation {
         fun Mission<*>.stepRelationship(index: Int): BasicRelationship = BasicRelationship(
             "${this.missionId}-$index",
             missionId,
-            missionSteps[index].collectionPointId,
+            missionSteps[index].stepId,
             STEP_RELATIONSHIP_NAME
         ).addProperty(COMPLETED, missionSteps[index].completed)
 
