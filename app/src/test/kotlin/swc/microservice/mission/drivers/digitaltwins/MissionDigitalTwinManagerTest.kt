@@ -46,19 +46,20 @@ class MissionDigitalTwinManagerTest : FreeSpec({
             }
             "should read digital twins" {
                 shouldNotThrow<Exception> {
-                    manager.getMission(missionId)
+                    manager.getMissionById(missionId)
                 }
             }
             "should complete steps" {
                 mission.isCompleted() shouldBe false
-                val completedMission = manager.completeMissionStep(mission)
-                completedMission.isCompleted() shouldBe true
+                val completedMission = manager.completeMissionStep(mission.missionId)
+                completedMission?.isCompleted() shouldBe true
             }
             "should assign missions to trucks" {
-                manager.assignMissionToTruck(mission, truckId).truckId shouldNotBe null
+                manager.assignTruckToMission(mission.missionId, truckId)?.truckId shouldNotBe null
             }
             "should delete digital twins" {
-                manager.deleteMission(missionId) shouldBe mission
+                val toDelete = manager.getMissionById(mission.missionId)
+                manager.deleteMission(missionId) shouldBe toDelete
                 shouldNotThrow<Exception> {
                     manager.deleteDigitalTwin(truckId)
                     manager.deleteDigitalTwin(collectionPointId)

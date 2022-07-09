@@ -67,7 +67,7 @@ object MissionPresentation {
         fun BasicDigitalTwin.toMission(relationships: List<BasicRelationship>): Mission<*> {
             return Mission(
                 missionId = this.id,
-                truckId = relationships.first { it.name == TRUCK_RELATIONSHIP_NAME }.targetId,
+                truckId = relationships.find { it.name == TRUCK_RELATIONSHIP_NAME }?.targetId,
                 date = LocalDate.parse(this.contents[DATE].toString()),
                 typeOfWaste = this.contents[TYPE_OF_WASTE].toString().toTypeOfWaste(),
                 typeOfMission = this.contents[TYPE_OF_MISSION].toString().toTypeOfMission(),

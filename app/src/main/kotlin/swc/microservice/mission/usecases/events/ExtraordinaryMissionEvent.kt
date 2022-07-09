@@ -1,13 +1,12 @@
 package swc.microservice.mission.usecases.events
 
 import swc.microservice.mission.entities.ExtraordinaryWaste
-import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.usecases.ComputeExtraordinaryMission
-import swc.microservice.mission.usecases.managers.MissionManager
+import swc.microservice.mission.usecases.managers.ManagerSupplier
 
 class ExtraordinaryMissionEvent(private val typeOfWaste: TypeOfWaste<ExtraordinaryWaste>) :
-    MissionEvent<Mission<ExtraordinaryWaste>> {
-    override fun handle(manager: MissionManager): Mission<ExtraordinaryWaste> =
+    MissionEvent<String> {
+    override fun handle(manager: ManagerSupplier): String =
         ComputeExtraordinaryMission(this.typeOfWaste).execute(manager)
 }
