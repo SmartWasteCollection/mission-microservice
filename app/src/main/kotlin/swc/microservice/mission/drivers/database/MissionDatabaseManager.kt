@@ -22,10 +22,8 @@ class MissionDatabaseManager(private val databaseName: String = DATABASE) : Miss
         const val COLLECTION: String = "missions"
     }
 
-    private val collection: MongoCollection<Mission<Waste>> =
-        KMongo.createClient(ConnectionString(CONNECTION_STRING)).getDatabase(this.databaseName).getCollectionOfName(
-            COLLECTION
-        )
+    private val client = KMongo.createClient(ConnectionString(CONNECTION_STRING))
+    private val collection: MongoCollection<Mission<Waste>> = client.getDatabase(this.databaseName).getCollectionOfName(COLLECTION)
 
     override fun completeMissionStep(missionId: String): Mission<Waste>? = this.getMissionById(missionId)?.let {
         it.missionSteps[it.missionSteps.indexOfFirst { s -> !s.completed }].completed = true
@@ -57,5 +55,9 @@ class MissionDatabaseManager(private val databaseName: String = DATABASE) : Miss
         val mission = getMissionById(missionId)
         this.collection.deleteOne(Mission<Waste>::missionId eq missionId)
         return mission
+    }
+
+    fun deleteDatabase(databaseName: String) {
+        this.client.getDatabase(databaseName).drop()
     }
 }

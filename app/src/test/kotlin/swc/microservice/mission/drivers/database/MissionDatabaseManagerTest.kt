@@ -52,6 +52,8 @@ class MissionDatabaseManagerTest : FreeSpec({
             "should delete it from the database" {
                 manager.deleteMission(missionId) shouldBe mission
                 manager.getMissions() shouldBe listOf()
+
+                manager.deleteDatabase(databaseName)
             }
         }
     }
