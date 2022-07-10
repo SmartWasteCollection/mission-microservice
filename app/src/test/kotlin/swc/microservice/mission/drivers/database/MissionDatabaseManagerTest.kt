@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
+import swc.microservice.mission.entities.toExtraordinaryTypeOfWaste
 import swc.microservice.mission.entities.toTypeOfMission
-import swc.microservice.mission.entities.toTypeOfWaste
 import java.util.UUID
 
 class MissionDatabaseManagerTest : FreeSpec({
@@ -19,7 +19,7 @@ class MissionDatabaseManagerTest : FreeSpec({
 
     val mission = Mission(
         missionId = missionId,
-        typeOfWaste = "PAPER".toTypeOfWaste(),
+        typeOfWaste = "IRON".toExtraordinaryTypeOfWaste(),
         typeOfMission = "EXTRAORDINARY".toTypeOfMission(),
         missionSteps = listOf(MissionStep(firstBooking), MissionStep(secondBooking))
     )

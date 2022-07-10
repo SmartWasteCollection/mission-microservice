@@ -1,18 +1,9 @@
 package swc.microservice.mission.entities
 
-import com.fasterxml.jackson.annotation.JsonSubTypes
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type
-import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import swc.microservice.mission.adapters.MissionPresentation
 
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type"
-)
-@JsonSubTypes(
-    Type(value = OrdinaryWaste::class, name = "OrdinaryWaste"),
-    Type(value = ExtraordinaryWaste::class, name = "ExtraordinaryWaste")
-)
+@JsonDeserialize(using = MissionPresentation.Deserialization.WasteDeserializer::class)
 sealed interface Waste
 
 enum class OrdinaryWaste : Waste {

@@ -7,5 +7,6 @@ import swc.microservice.mission.usecases.managers.ManagerSupplier
 
 class GetAllMissions : MissionUseCase<List<Mission<Waste>>> {
     override fun execute(manager: ManagerSupplier): List<Mission<Waste>> =
-        manager.mission(TypeOfMission.ORDINARY).getMissions() + manager.mission(TypeOfMission.EXTRAORDINARY).getMissions()
+        manager.mission(TypeOfMission.ORDINARY).getMissions()
+            .union(manager.mission(TypeOfMission.EXTRAORDINARY).getMissions()).toList()
 }

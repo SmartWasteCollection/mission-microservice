@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import swc.microservice.mission.drivers.ManagerSupplierImpl
-import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
-import swc.microservice.mission.entities.TypeOfWaste
 import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.entities.toExtraordinaryTypeOfWaste
 import swc.microservice.mission.usecases.AssignTruckToMission
 import swc.microservice.mission.usecases.CompleteMissionStep
 import swc.microservice.mission.usecases.ComputeExtraordinaryMission
@@ -31,8 +30,8 @@ class MissionController(private val managerSupplier: ManagerSupplier = ManagerSu
         ComputeOrdinaryMission(dumpsterId).execute(managerSupplier)
 
     @PostMapping("/extraordinary")
-    fun generateExtraordinaryMission(@RequestBody typeOfWaste: TypeOfWaste<ExtraordinaryWaste>): String =
-        ComputeExtraordinaryMission(typeOfWaste).execute(managerSupplier)
+    fun generateExtraordinaryMission(@RequestBody typeOfWaste: String): String =
+        ComputeExtraordinaryMission(typeOfWaste.toExtraordinaryTypeOfWaste()).execute(managerSupplier)
 
     @PutMapping("/{id}/step")
     fun missionStep(@PathVariable id: String): Mission<Waste>? =
