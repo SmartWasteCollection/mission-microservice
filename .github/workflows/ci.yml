@@ -17,6 +17,8 @@ jobs:
         os: [ ubuntu, macos, windows ]
         java_version: [ 15, 17 ]
     runs-on: ${{ matrix.os }}-latest
+    env:
+      MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
