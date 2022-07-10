@@ -15,4 +15,6 @@ interface MissionManager {
     fun createMission(mission: Mission<Waste>): String
 
     fun createNewMissionId(): String
+
+    fun deleteMission(missionId: String): Mission<Waste>?
 }

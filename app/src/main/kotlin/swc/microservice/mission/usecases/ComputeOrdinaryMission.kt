@@ -12,9 +12,9 @@ class ComputeOrdinaryMission(private val dumpsterId: String?) : MissionUseCase<S
                 .filter { d -> d.dumpsterType.typeOfWaste == dumpsters.find { du -> du.id == dumpsterId }?.dumpsterType?.typeOfWaste }
                 .filter { d -> d.occupiedVolume.getOccupiedPercentage(d.dumpsterType.size.capacity) >= 50 }.take(10)
                 .let {
-                    manager.mission().createMission(
+                    manager.mission(TypeOfMission.ORDINARY).createMission(
                         Mission(
-                            missionId = manager.mission().createNewMissionId(),
+                            missionId = manager.mission(TypeOfMission.ORDINARY).createNewMissionId(),
                             typeOfWaste = it.first().dumpsterType.typeOfWaste,
                             typeOfMission = TypeOfMission.ORDINARY,
                             missionSteps = it.map { du -> manager.dumpster().getCollectionPoint(du.id) }

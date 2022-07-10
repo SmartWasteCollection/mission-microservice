@@ -99,6 +99,12 @@ class MissionUseCasesTest : FreeSpec({
         }
 
         override fun createNewMissionId(): String = "Mission-${UUID.randomUUID()}"
+
+        override fun deleteMission(missionId: String): Mission<Waste>? {
+            val mission = getMissionById(missionId)
+            missions = missions.filter { it.missionId != missionId }
+            return mission
+        }
     }
 
     val bookingManager: BookingManager = object : BookingManager {
@@ -123,7 +129,9 @@ class MissionUseCasesTest : FreeSpec({
     }
 
     val supplier: ManagerSupplier = object : ManagerSupplier {
-        override fun mission(): MissionManager = missionManager
+        override fun mission(type: TypeOfMission): MissionManager = missionManager
+
+        override fun mission(mission: Mission<Waste>): MissionManager = missionManager
 
         override fun dumpster(): DumpsterManager = dumpsterManager
 

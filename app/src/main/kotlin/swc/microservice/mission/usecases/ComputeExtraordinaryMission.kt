@@ -11,9 +11,9 @@ class ComputeExtraordinaryMission(private val typeOfWaste: TypeOfWaste<Extraordi
     MissionUseCase<String> {
     override fun execute(manager: ManagerSupplier): String =
         manager.booking().getBookings().filter { it.typeOfWaste == this.typeOfWaste }.let {
-            manager.mission().createMission(
+            manager.mission(TypeOfMission.EXTRAORDINARY).createMission(
                 Mission(
-                    missionId = manager.mission().createNewMissionId(),
+                    missionId = manager.mission(TypeOfMission.EXTRAORDINARY).createNewMissionId(),
                     typeOfWaste = this.typeOfWaste,
                     typeOfMission = TypeOfMission.EXTRAORDINARY,
                     missionSteps = it.map { b -> MissionStep(b._id) }

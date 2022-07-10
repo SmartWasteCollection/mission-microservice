@@ -52,4 +52,10 @@ class MissionDatabaseManager : MissionManager {
     }
 
     override fun createNewMissionId(): String = "Mission-${UUID.randomUUID()}"
+
+    override fun deleteMission(missionId: String): Mission<Waste>? {
+        val mission = getMissionById(missionId)
+        this.collection.deleteOne(Mission<Waste>::missionId eq missionId)
+        return mission
+    }
 }

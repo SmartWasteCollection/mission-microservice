@@ -108,7 +108,7 @@ class MissionDigitalTwinManager : MissionManager {
     /**
      * Deletes a [Mission]'s digital twin.
      */
-    fun deleteMission(missionId: String): Mission<*>? {
+    override fun deleteMission(missionId: String): Mission<*>? {
         val mission = getMissionById(missionId)
         client.listRelationships(missionId, BasicRelationship::class.java)
             .toList()
