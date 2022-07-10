@@ -12,7 +12,6 @@ import swc.microservice.mission.entities.MissionStep
 import swc.microservice.mission.entities.OrdinaryWaste
 import swc.microservice.mission.entities.Position
 import swc.microservice.mission.entities.Size
-import swc.microservice.mission.entities.Truck
 import swc.microservice.mission.entities.TypeOfDumpster
 import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.TypeOfWaste
@@ -38,7 +37,7 @@ class MissionUseCasesTest : FreeSpec({
             "city3",
             "province3",
             "address3"
-        ),
+        )
     )
     val dumpsters: List<Dumpster> = listOf(
         Dumpster(
@@ -55,16 +54,15 @@ class MissionUseCasesTest : FreeSpec({
             "d3",
             TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER)),
             occupiedVolume = Volume(10.0)
-        ),
+        )
     )
     val collectionPoints: List<CollectionPoint> = listOf(
         CollectionPoint("cp1", Position(0, 0)),
         CollectionPoint("cp2", Position(0, 0)),
-        CollectionPoint("cp3", Position(0, 0)),
+        CollectionPoint("cp3", Position(0, 0))
     )
     val collectionPointId = "collectionPoint"
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
-    val position = Position(0L, 0L)
 
     val missionManager: MissionManager = object : MissionManager {
         override fun completeMissionStep(missionId: String): Mission<Waste>? {
@@ -156,6 +154,11 @@ class MissionUseCasesTest : FreeSpec({
                 missions.find { it.missionId == id }?.typeOfWaste shouldBe typeOfWaste
             }
         }
+        "The GetAllMissions use case" - {
+            "should get all missions" {
+                GetAllMissions().execute(supplier) shouldBe missions
+            }
+        }
         "The CompleteMissionStep use case" - {
             "should complete a step of the mission" {
                 val missionId = missions.first().missionId
@@ -174,7 +177,7 @@ class MissionUseCasesTest : FreeSpec({
                 val truckId = "myTruck"
                 AssignTruckToMission(
                     missionId,
-                    Truck(truckId, position, Volume(0.0), 0.0)
+                    truckId
                 ).execute(supplier)?.truckId shouldBe truckId
                 missions.size shouldBe 2
                 missions.find { it.missionId == missionId }?.typeOfMission shouldBe missionManager.getMissionById(missionId)?.typeOfMission
