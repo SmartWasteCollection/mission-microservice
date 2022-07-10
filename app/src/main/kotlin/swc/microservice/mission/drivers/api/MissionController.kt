@@ -7,18 +7,21 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import swc.microservice.mission.drivers.ManagerSupplierImpl
 import swc.microservice.mission.entities.Mission
-import swc.microservice.mission.entities.OrdinaryWaste
+import swc.microservice.mission.usecases.ComputeOrdinaryMission
+import swc.microservice.mission.usecases.managers.ManagerSupplier
 
 @RestController
 @RequestMapping("/missions")
-class MissionController {
+class MissionController(private val managerSupplier: ManagerSupplier = ManagerSupplierImpl()) {
 
     @GetMapping("/")
     fun getAllMissions(): List<Mission<*>> = TODO()
 
     @PostMapping("/ordinary")
-    fun generateOrdinaryMission(@RequestBody body: String): Mission<OrdinaryWaste> = TODO()
+    fun generateOrdinaryMission(@RequestBody dumpsterId: String): String =
+        ComputeOrdinaryMission(dumpsterId).execute(managerSupplier)
 
     @PutMapping("/{id}/step")
     fun missionStep(@PathVariable id: String): Mission<*> = TODO()

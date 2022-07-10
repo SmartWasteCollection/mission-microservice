@@ -71,7 +71,8 @@ object MissionPresentation {
                 date = LocalDate.parse(this.contents[DATE].toString()),
                 typeOfWaste = this.contents[TYPE_OF_WASTE].toString().toTypeOfWaste(),
                 typeOfMission = this.contents[TYPE_OF_MISSION].toString().toTypeOfMission(),
-                missionSteps = relationships.filter { it.name == STEP_RELATIONSHIP_NAME }.map { MissionStep(it.targetId, it.properties[COMPLETED] as Boolean) }
+                missionSteps = relationships.filter { it.name == STEP_RELATIONSHIP_NAME }
+                    .map { MissionStep(it.targetId, it.properties[COMPLETED] as Boolean) }
             )
         }
     }

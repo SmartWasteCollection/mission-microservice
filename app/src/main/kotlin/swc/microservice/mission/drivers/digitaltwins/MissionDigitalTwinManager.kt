@@ -11,6 +11,7 @@ import swc.microservice.mission.adapters.MissionPresentation.Serialization.toDig
 import swc.microservice.mission.adapters.MissionPresentation.Serialization.truckRelationship
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.ENDPOINT
 import swc.microservice.mission.entities.Mission
+import swc.microservice.mission.entities.TypeOfMission
 import swc.microservice.mission.entities.Waste
 import swc.microservice.mission.usecases.managers.MissionManager
 import java.util.UUID
@@ -45,7 +46,9 @@ class MissionDigitalTwinManager : MissionManager {
      */
     override fun createMission(mission: Mission<Waste>): String {
         val twin = createDigitalTwin(mission.toDigitalTwin())
-        (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
+        if (mission.typeOfMission == TypeOfMission.ORDINARY) {
+            (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
+        }
         return twin.id
     }
 
