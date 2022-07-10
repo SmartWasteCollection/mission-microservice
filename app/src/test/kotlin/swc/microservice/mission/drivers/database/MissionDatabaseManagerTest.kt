@@ -50,11 +50,13 @@ class MissionDatabaseManagerTest : FreeSpec({
         }
         "when deleting a mission" - {
             "should delete it from the database" {
-                manager.deleteMission(missionId) shouldBe mission
+                manager.deleteMission(missionId) shouldBe mission.apply {
+                    this.truckId = truckId
+                    this.missionSteps.forEach { it.completed = true }
+                }
                 manager.getMissions() shouldBe listOf()
-
-                manager.deleteDatabase(databaseName)
             }
         }
+        manager.deleteDatabase(databaseName)
     }
 })
