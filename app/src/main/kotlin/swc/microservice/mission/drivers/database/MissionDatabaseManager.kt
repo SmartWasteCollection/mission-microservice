@@ -12,7 +12,7 @@ import swc.microservice.mission.entities.Waste
 import swc.microservice.mission.usecases.managers.MissionManager
 import java.util.UUID
 
-class MissionDatabaseManager : MissionManager {
+class MissionDatabaseManager(private val databaseName: String = DATABASE) : MissionManager {
     private companion object {
         val dotenv = dotenv {
             ignoreIfMissing = true
@@ -23,7 +23,7 @@ class MissionDatabaseManager : MissionManager {
     }
 
     private val collection: MongoCollection<Mission<Waste>> =
-        KMongo.createClient(ConnectionString(CONNECTION_STRING)).getDatabase(DATABASE).getCollectionOfName(
+        KMongo.createClient(ConnectionString(CONNECTION_STRING)).getDatabase(this.databaseName).getCollectionOfName(
             COLLECTION
         )
 
