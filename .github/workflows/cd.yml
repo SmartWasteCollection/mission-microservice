@@ -47,6 +47,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push Docker Image
         run: |
-          docker build . --build-arg service=${{ secrets.CONTAINER_AZURE_SERVICE_PRINCIPAL_NAME }} --build-arg secret=${{ secrets.CONTAINER_AZURE_SECRET }} --build-arg tenant=${{ secrets.CONTAINER_AZURE_TENANT }} --tag ghcr.io/smartwastecollection/mission-microservice:${{ steps.getTag.outputs.tagVersion }}
+          docker build . --tag ghcr.io/smartwastecollection/mission-microservice:${{ steps.getTag.outputs.tagVersion }}
           docker push ghcr.io/smartwastecollection/mission-microservice:${{ steps.getTag.outputs.tagVersion }}
 
