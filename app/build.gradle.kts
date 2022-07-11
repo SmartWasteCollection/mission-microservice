@@ -21,7 +21,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.7.1")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
     implementation("com.azure:azure-digitaltwins-core:1.2.4")
     implementation("com.azure:azure-identity:1.5.3")
