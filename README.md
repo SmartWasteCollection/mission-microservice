@@ -15,5 +15,5 @@ This repository contains the microservice that handles the generation and manage
 To run this microservice you can get the system's latest container image:
 
 ```
-$ docker run -p <port>:<port> -e server.port=<port> ghcr.io/smartwastecollection/mission-microservice:<latestVersion>
+$ docker run -p <port>:<port> -e server.port=<port> -e MONGO_CONNECTION_STRING=<connection-string> ghcr.io/smartwastecollection/mission-microservice:<latestVersion>
 ```
