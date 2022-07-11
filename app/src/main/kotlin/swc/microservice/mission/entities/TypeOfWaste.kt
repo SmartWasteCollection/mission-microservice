@@ -1,11 +1,23 @@
 package swc.microservice.mission.entities
 
-import kotlinx.serialization.Serializable
+data class TypeOfWaste<out T : Waste>(val wasteName: T)
 
-@Serializable
-data class TypeOfWaste<T : Waste>(val wasteName: T)
+fun String.toTypeOfWaste(): TypeOfWaste<Waste> = when (this) {
+    "PAPER", "PLASTICS/ALUMINIUM", "ORGANIC", "GLASS", "UNSORTED" -> this.toOrdinaryTypeOfWaste()
+    else -> this.toExtraordinaryTypeOfWaste()
+}
 
-fun String.toTypeOfWaste(): TypeOfWaste<ExtraordinaryWaste> = TypeOfWaste(
+fun String.toOrdinaryTypeOfWaste(): TypeOfWaste<OrdinaryWaste> = TypeOfWaste(
+    when (this.uppercase()) {
+        "PAPER" -> OrdinaryWaste.PAPER
+        "PLASTICS/ALUMINIUM" -> OrdinaryWaste.PLASTICS_ALUMINIUM
+        "ORGANIC" -> OrdinaryWaste.ORGANIC
+        "GLASS" -> OrdinaryWaste.GLASS
+        else -> OrdinaryWaste.UNSORTED
+    }
+)
+
+fun String.toExtraordinaryTypeOfWaste(): TypeOfWaste<ExtraordinaryWaste> = TypeOfWaste(
     when (this.uppercase()) {
         "ELECTRONICS" -> ExtraordinaryWaste.ELECTRONICS
         "IRON" -> ExtraordinaryWaste.IRON

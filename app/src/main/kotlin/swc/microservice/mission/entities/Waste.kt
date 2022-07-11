@@ -1,15 +1,15 @@
 package swc.microservice.mission.entities
 
-import kotlinx.serialization.Serializable
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import swc.microservice.mission.adapters.MissionPresentation
 
+@JsonDeserialize(using = MissionPresentation.Deserialization.WasteDeserializer::class)
 sealed interface Waste
 
-@Serializable
 enum class OrdinaryWaste : Waste {
     UNSORTED, PLASTICS_ALUMINIUM, ORGANIC, GLASS, PAPER
 }
 
-@Serializable
 enum class ExtraordinaryWaste : Waste {
     TWIGS, WASTE_OIL, IRON, ELECTRONICS, CLOTHES, OTHER
 }

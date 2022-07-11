@@ -1,16 +1,18 @@
 package swc.microservice.mission.entities
 
-import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
-@Serializable
-data class Booking<T : Waste>(
+data class Booking(
     val _id: String,
-    val typeOfWaste: TypeOfWaste<T>,
-    val position: Position,
+    val userId: String,
+    val typeOfWaste: TypeOfWaste<ExtraordinaryWaste>,
+    val datetime: LocalDate,
+    val city: String,
+    val province: String,
+    val address: String,
     val status: BookingStatus = BookingStatus.PENDING
 )
 
-@Serializable
 enum class BookingStatus {
-    PENDING, REQUESTED, FULFILLED
+    PENDING, ASSIGNED, COMPLETED
 }
