@@ -11,8 +11,12 @@ import swc.microservice.mission.adapters.MissionPresentation.Serialization.toDig
 import swc.microservice.mission.adapters.MissionPresentation.Serialization.truckRelationship
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.ENDPOINT
 import swc.microservice.mission.entities.Mission
+import swc.microservice.mission.entities.TypeOfMission
+import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.usecases.managers.MissionManager
+import java.util.UUID
 
-class MissionDigitalTwinManager {
+class MissionDigitalTwinManager : MissionManager {
 
     private val client: DigitalTwinsClient = DigitalTwinsClientBuilder()
         .credential(AzureCliCredentialBuilder().build())
@@ -22,7 +26,7 @@ class MissionDigitalTwinManager {
     /**
      * Gets the digital twin of a [Mission].
      */
-    fun getMission(missionId: String): Mission<*>? = try {
+    override fun getMissionById(missionId: String): Mission<Waste>? = try {
         client.getDigitalTwin(missionId, BasicDigitalTwin::class.java).toMission(
             client.listRelationships(missionId, BasicRelationship::class.java).toList()
         )
@@ -31,14 +35,24 @@ class MissionDigitalTwinManager {
         null
     }
 
+    override fun getMissions(): List<Mission<Waste>> =
+        client.query(
+            "SELECT * FROM digitaltwins WHERE \$metadata.\$model = 'dtmi:swc:Mission;1'",
+            BasicDigitalTwin::class.java
+        ).map { it.toMission(client.listRelationships(it.id, BasicRelationship::class.java).toList()) }
+
     /**
      * Creates the digital twin of a [Mission] (including its relationships with trucks and collection points).
      */
-    fun createMission(mission: Mission<*>): String {
+    override fun createMission(mission: Mission<Waste>): String {
         val twin = createDigitalTwin(mission.toDigitalTwin())
-        (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
+        if (mission.typeOfMission == TypeOfMission.ORDINARY) {
+            (0 until mission.missionSteps.size).forEach { createStepRelationship(mission, it) }
+        }
         return twin.id
     }
+
+    override fun createNewMissionId(): String = "Mission-${UUID.randomUUID()}"
 
     /**
      * Deploys a [BasicDigitalTwin].
@@ -49,7 +63,7 @@ class MissionDigitalTwinManager {
     /**
      * Deploys a _MissionHasStep_ relationship.
      */
-    private fun createStepRelationship(mission: Mission<*>, index: Int): String {
+    private fun createStepRelationship(mission: Mission<Waste>, index: Int): String {
         val relationship = mission.stepRelationship(index)
         return client.createOrReplaceRelationship(
             mission.missionId,
@@ -59,7 +73,7 @@ class MissionDigitalTwinManager {
         ).id
     }
 
-    private fun createTruckRelationship(mission: Mission<*>, truckId: String): String {
+    private fun createTruckRelationship(mission: Mission<Waste>, truckId: String): String {
         val relationship = mission.truckRelationship(truckId)
         return client.createOrReplaceRelationship(
             mission.missionId,
@@ -72,27 +86,30 @@ class MissionDigitalTwinManager {
     /**
      * Completes a _MissionHasStep_ relationship.
      */
-    fun completeMissionStep(mission: Mission<*>): Mission<*> {
-        val index = mission.missionSteps.indexOfFirst { !it.completed }
-        mission.missionSteps[index].completed = true
-        createStepRelationship(mission, index)
-        return mission
+    override fun completeMissionStep(missionId: String): Mission<Waste>? = getMissionById(missionId)?.let {
+        val index = it.missionSteps.indexOfFirst { m -> !m.completed }
+        it.missionSteps[index].completed = true
+        createStepRelationship(it, index)
+        return it
     }
 
     /**
      * Creates a _MissionHasTruck_ relationship.
      */
-    fun assignMissionToTruck(mission: Mission<*>, truckId: String): Mission<*> {
-        mission.truckId = truckId
-        createTruckRelationship(mission, truckId)
+    override fun assignTruckToMission(missionId: String, truckId: String): Mission<Waste>? {
+        val mission = this.getMissionById(missionId)
+        mission?.truckId = truckId
+        if (mission != null) {
+            createTruckRelationship(mission, truckId)
+        }
         return mission
     }
 
     /**
      * Deletes a [Mission]'s digital twin.
      */
-    fun deleteMission(missionId: String): Mission<*>? {
-        val mission = getMission(missionId)
+    override fun deleteMission(missionId: String): Mission<*>? {
+        val mission = getMissionById(missionId)
         client.listRelationships(missionId, BasicRelationship::class.java)
             .toList()
             .forEach { client.deleteRelationship(missionId, it.id) }

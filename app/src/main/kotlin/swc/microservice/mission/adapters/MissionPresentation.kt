@@ -3,6 +3,9 @@ package swc.microservice.mission.adapters
 import com.azure.digitaltwins.core.BasicDigitalTwin
 import com.azure.digitaltwins.core.BasicDigitalTwinMetadata
 import com.azure.digitaltwins.core.BasicRelationship
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import swc.microservice.mission.adapters.MissionPresentation.Values.COMPLETED
 import swc.microservice.mission.adapters.MissionPresentation.Values.DATE
 import swc.microservice.mission.adapters.MissionPresentation.Values.STEP_RELATIONSHIP_NAME
@@ -10,8 +13,11 @@ import swc.microservice.mission.adapters.MissionPresentation.Values.TRUCK_RELATI
 import swc.microservice.mission.adapters.MissionPresentation.Values.TYPE_OF_MISSION
 import swc.microservice.mission.adapters.MissionPresentation.Values.TYPE_OF_WASTE
 import swc.microservice.mission.drivers.digitaltwins.DigitalTwinsValues.MISSION_MODEL_ID
+import swc.microservice.mission.entities.ExtraordinaryWaste
 import swc.microservice.mission.entities.Mission
 import swc.microservice.mission.entities.MissionStep
+import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.entities.toOrdinaryTypeOfWaste
 import swc.microservice.mission.entities.toTypeOfMission
 import swc.microservice.mission.entities.toTypeOfWaste
 import java.time.LocalDate
@@ -44,7 +50,7 @@ object MissionPresentation {
         fun Mission<*>.stepRelationship(index: Int): BasicRelationship = BasicRelationship(
             "${this.missionId}-$index",
             missionId,
-            missionSteps[index].collectionPointId,
+            missionSteps[index].stepId,
             STEP_RELATIONSHIP_NAME
         ).addProperty(COMPLETED, missionSteps[index].completed)
 
@@ -67,12 +73,18 @@ object MissionPresentation {
         fun BasicDigitalTwin.toMission(relationships: List<BasicRelationship>): Mission<*> {
             return Mission(
                 missionId = this.id,
-                truckId = relationships.first { it.name == TRUCK_RELATIONSHIP_NAME }.targetId,
+                truckId = relationships.find { it.name == TRUCK_RELATIONSHIP_NAME }?.targetId,
                 date = LocalDate.parse(this.contents[DATE].toString()),
-                typeOfWaste = this.contents[TYPE_OF_WASTE].toString().toTypeOfWaste(),
+                typeOfWaste = this.contents[TYPE_OF_WASTE].toString().toOrdinaryTypeOfWaste(),
                 typeOfMission = this.contents[TYPE_OF_MISSION].toString().toTypeOfMission(),
-                missionSteps = relationships.filter { it.name == STEP_RELATIONSHIP_NAME }.map { MissionStep(it.targetId, it.properties[COMPLETED] as Boolean) }
+                missionSteps = relationships.filter { it.name == STEP_RELATIONSHIP_NAME }
+                    .map { MissionStep(it.targetId, it.properties[COMPLETED] as Boolean) }
             )
+        }
+
+        class WasteDeserializer(vc: Class<*> = Waste::class.java) : StdDeserializer<Waste>(vc) {
+            override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Waste =
+                p?.valueAsString?.toTypeOfWaste()?.wasteName ?: ExtraordinaryWaste.OTHER
         }
     }
 }

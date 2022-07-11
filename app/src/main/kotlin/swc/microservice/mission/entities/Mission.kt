@@ -12,3 +12,5 @@ data class Mission<out T : Waste>(
 ) {
     fun isCompleted(): Boolean = missionSteps.all { it.completed }
 }
+
+data class MissionStep(val stepId: String, var completed: Boolean = false)
