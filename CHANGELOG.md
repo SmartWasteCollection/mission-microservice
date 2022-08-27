@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.5...v0.1.6) (2022-08-27)
+
+
+### Bug Fixes
+
+* add cross origin annotation ([0a17535](https://github.com/SmartWasteCollection/mission-microservice/commit/0a175350686fddc1f9bb06f09c4fbce97d58a6c0))
+
 ## [0.1.5](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.4...v0.1.5) (2022-08-18)
 
 
