@@ -1,5 +1,6 @@
 package swc.microservice.mission.drivers.api
 
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,6 +20,7 @@ import swc.microservice.mission.usecases.GetAllMissions
 import swc.microservice.mission.usecases.managers.ManagerSupplier
 
 @RestController
+@CrossOrigin
 @RequestMapping("/missions")
 class MissionController(private val managerSupplier: ManagerSupplier = ManagerSupplierImpl()) {
 
