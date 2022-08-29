@@ -23,3 +23,7 @@ The `.env` file **must** contain the secrets needed to perform the login into th
 1. `AZURE_SERVICE_PRINCIPAL_NAME`: UUID that represents the Application (client) ID of the _Service Principal_
 2. `AZURE_SECRET`: UUID that identifies the secret used to perform the login from the _Service Principal_
 3. `AZURE_TENANT`: UUID that identifies the Directory (tenant) ID of the _Service Principal_
+
+---
+
+You can find the _Swagger_ API of the microservice [here](https://app.swaggerhub.com/apis/ALESSANDROMARCANTONI/mission-microservice/1.0.0).
