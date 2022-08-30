@@ -6,12 +6,7 @@ import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import swc.microservice.mission.entities.Mission
-import swc.microservice.mission.entities.MissionStep
-import swc.microservice.mission.entities.OrdinaryWaste
-import swc.microservice.mission.entities.Position
-import swc.microservice.mission.entities.TypeOfMission
-import swc.microservice.mission.entities.TypeOfWaste
+import swc.microservice.mission.entities.*
 
 class MissionDigitalTwinManagerTest : FreeSpec({
     val manager = MissionDigitalTwinManager()
@@ -32,7 +27,7 @@ class MissionDigitalTwinManagerTest : FreeSpec({
     val mission = Mission(
         missionId = missionId,
         truckId = null,
-        typeOfWaste = TypeOfWaste(OrdinaryWaste.PAPER),
+        typeOfWaste = TypeOfWaste(OrdinaryWaste.PAPER, WasteColor.BLUE),
         typeOfMission = TypeOfMission.ORDINARY,
         missionSteps = listOf(MissionStep(collectionPointId))
     )

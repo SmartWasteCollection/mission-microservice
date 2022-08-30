@@ -2,21 +2,7 @@ package swc.microservice.mission.usecases
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import swc.microservice.mission.entities.Booking
-import swc.microservice.mission.entities.CollectionPoint
-import swc.microservice.mission.entities.Dimension
-import swc.microservice.mission.entities.Dumpster
-import swc.microservice.mission.entities.ExtraordinaryWaste
-import swc.microservice.mission.entities.Mission
-import swc.microservice.mission.entities.MissionStep
-import swc.microservice.mission.entities.OrdinaryWaste
-import swc.microservice.mission.entities.Position
-import swc.microservice.mission.entities.Size
-import swc.microservice.mission.entities.TypeOfDumpster
-import swc.microservice.mission.entities.TypeOfMission
-import swc.microservice.mission.entities.TypeOfWaste
-import swc.microservice.mission.entities.Volume
-import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.entities.*
 import swc.microservice.mission.usecases.managers.BookingManager
 import swc.microservice.mission.usecases.managers.DumpsterManager
 import swc.microservice.mission.usecases.managers.ManagerSupplier
@@ -27,12 +13,12 @@ import java.util.UUID
 class MissionUseCasesTest : FreeSpec({
     var missions: List<Mission<Waste>> = listOf()
     var bookings: List<Booking> = listOf(
-        Booking("b1", "user1", TypeOfWaste(ExtraordinaryWaste.IRON), LocalDate.now(), "city1", "province1", "address1"),
-        Booking("b2", "user2", TypeOfWaste(ExtraordinaryWaste.IRON), LocalDate.now(), "city2", "province2", "address2"),
+        Booking("b1", "user1", TypeOfWaste(ExtraordinaryWaste.IRON, WasteColor.NONE), LocalDate.now(), "city1", "province1", "address1"),
+        Booking("b2", "user2", TypeOfWaste(ExtraordinaryWaste.IRON, WasteColor.NONE), LocalDate.now(), "city2", "province2", "address2"),
         Booking(
             "b3",
             "user3",
-            TypeOfWaste(ExtraordinaryWaste.TWIGS),
+            TypeOfWaste(ExtraordinaryWaste.TWIGS, WasteColor.NONE),
             LocalDate.now(),
             "city3",
             "province3",
@@ -42,17 +28,17 @@ class MissionUseCasesTest : FreeSpec({
     val dumpsters: List<Dumpster> = listOf(
         Dumpster(
             "d1",
-            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER)),
+            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER, WasteColor.BLUE)),
             occupiedVolume = Volume(120.0)
         ),
         Dumpster(
             "d2",
-            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER)),
+            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER, WasteColor.BLUE)),
             occupiedVolume = Volume(100.0)
         ),
         Dumpster(
             "d3",
-            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER)),
+            TypeOfDumpster(Size(Dimension.LARGE, 200.0), TypeOfWaste(OrdinaryWaste.PAPER, WasteColor.BLUE)),
             occupiedVolume = Volume(10.0)
         )
     )
@@ -62,7 +48,7 @@ class MissionUseCasesTest : FreeSpec({
         CollectionPoint("cp3", Position(0, 0))
     )
     val collectionPointId = "collectionPoint"
-    val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS)
+    val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS, WasteColor.NONE)
 
     val missionManager: MissionManager = object : MissionManager {
         override fun completeMissionStep(missionId: String): Mission<Waste>? {
