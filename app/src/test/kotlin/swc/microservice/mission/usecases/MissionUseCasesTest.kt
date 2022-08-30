@@ -2,7 +2,22 @@ package swc.microservice.mission.usecases
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import swc.microservice.mission.entities.*
+import swc.microservice.mission.entities.Booking
+import swc.microservice.mission.entities.CollectionPoint
+import swc.microservice.mission.entities.Dimension
+import swc.microservice.mission.entities.Dumpster
+import swc.microservice.mission.entities.ExtraordinaryWaste
+import swc.microservice.mission.entities.Mission
+import swc.microservice.mission.entities.MissionStep
+import swc.microservice.mission.entities.OrdinaryWaste
+import swc.microservice.mission.entities.Position
+import swc.microservice.mission.entities.Size
+import swc.microservice.mission.entities.TypeOfDumpster
+import swc.microservice.mission.entities.TypeOfMission
+import swc.microservice.mission.entities.TypeOfWaste
+import swc.microservice.mission.entities.Volume
+import swc.microservice.mission.entities.Waste
+import swc.microservice.mission.entities.WasteColor
 import swc.microservice.mission.usecases.managers.BookingManager
 import swc.microservice.mission.usecases.managers.DumpsterManager
 import swc.microservice.mission.usecases.managers.ManagerSupplier
