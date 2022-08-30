@@ -1,3 +1,10 @@
+## [0.1.7](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.6...v0.1.7) (2022-08-30)
+
+
+### Bug Fixes
+
+* adapt to dumpster microservice ([2fd4a6b](https://github.com/SmartWasteCollection/mission-microservice/commit/2fd4a6b653f88c7db8ef262bbfdfdb52efaaf3fb))
+
 ## [0.1.6](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.5...v0.1.6) (2022-08-27)
 
 
