@@ -4,12 +4,16 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.github.cdimascio.dotenv.Dotenv
 import io.github.cdimascio.dotenv.dotenv
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Async
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.getForEntity
 import swc.microservice.mission.entities.CollectionPoint
 import swc.microservice.mission.entities.Dumpster
 import swc.microservice.mission.usecases.managers.DumpsterManager
+import java.util.Collections
 import java.util.concurrent.CompletableFuture
 
 open class HttpDumpsterManager : DumpsterManager {
@@ -22,6 +26,10 @@ open class HttpDumpsterManager : DumpsterManager {
     }
 
     private val restTemplate = RestTemplate()
+    private val headers = HttpHeaders().also {
+        it.accept = Collections.singletonList(MediaType.APPLICATION_JSON)
+    }
+    private val entity = HttpEntity("body", headers)
 
     override fun getDumpsters(): List<Dumpster> = this.doGetDumpsters().get()
 
@@ -29,13 +37,13 @@ open class HttpDumpsterManager : DumpsterManager {
 
     @Async
     open fun doGetDumpsters(): CompletableFuture<List<Dumpster>> =
-        CompletableFuture.completedFuture(restTemplate.getForEntity<String>(ADDRESS).body?.deserializeDumpsters())
+        CompletableFuture.completedFuture(restTemplate.exchange(ADDRESS, HttpMethod.GET, entity, String::class.java).body?.deserializeDumpsters())
 
     @Async
     open fun doGetCollectionPoint(dumpsterId: String): CompletableFuture<CollectionPoint> =
         CompletableFuture.completedFuture(
             restTemplate.getForObject(
-                ADDRESS.plus(dumpsterId).plus("/collectionPoint"),
+                ADDRESS.plus(dumpsterId).plus("/collectionpoint"),
                 CollectionPoint::class.java
             )
         )

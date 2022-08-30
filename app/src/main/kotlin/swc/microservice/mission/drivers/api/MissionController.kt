@@ -24,7 +24,7 @@ import swc.microservice.mission.usecases.managers.ManagerSupplier
 @RequestMapping("/missions")
 class MissionController(private val managerSupplier: ManagerSupplier = ManagerSupplierImpl()) {
 
-    @GetMapping("/")
+    @GetMapping
     fun getAllMissions(): List<Mission<Waste>> = GetAllMissions().execute(managerSupplier)
 
     @PostMapping("/ordinary")

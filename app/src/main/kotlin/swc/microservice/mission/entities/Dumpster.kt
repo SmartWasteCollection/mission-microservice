@@ -1,23 +1,26 @@
 package swc.microservice.mission.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
 private const val MAX_VOLUME_THRESHOLD: Double = 95.0
 const val TIMEOUT_SECONDS: Double = 30.0
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Dumpster(
     val id: String,
     val dumpsterType: TypeOfDumpster,
-    var isOpen: Boolean = false,
+    var open: Boolean = false,
     val occupiedVolume: Volume,
-    val isWorking: Boolean = true,
+    val working: Boolean = true,
 ) {
-    fun isAvailable(): Boolean =
-        this.isWorking && this.occupiedVolume
+    fun available(): Boolean =
+        this.working && this.occupiedVolume
             .getOccupiedPercentage(this.dumpsterType.size.capacity) < MAX_VOLUME_THRESHOLD
 }
 
 data class TypeOfDumpster(
     val size: Size,
-    val typeOfWaste: TypeOfWaste<OrdinaryWaste>
+    val typeOfOrdinaryWaste: TypeOfWaste<OrdinaryWaste>
 )
 
 data class Size(
