@@ -18,7 +18,7 @@ class ComputeOrdinaryMission(private val dumpsterId: String?) : MissionUseCase<S
                             typeOfWaste = it.first().dumpsterType.typeOfOrdinaryWaste,
                             typeOfMission = TypeOfMission.ORDINARY,
                             missionSteps = it.map { du -> manager.dumpster().getCollectionPoint(du.id) }
-                                .map { cp -> MissionStep(cp.collectionPointId) }
+                                .map { cp -> MissionStep(cp.id) }
                         )
                     )
                 }

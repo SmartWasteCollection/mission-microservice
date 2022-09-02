@@ -62,7 +62,7 @@ class MissionUseCasesTest : FreeSpec({
         CollectionPoint("cp2", Position(0, 0)),
         CollectionPoint("cp3", Position(0, 0))
     )
-    val collectionPointId = "collectionPoint"
+    val id = "collectionPoint"
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS, WasteColor.NONE)
 
     val missionManager: MissionManager = object : MissionManager {
@@ -75,7 +75,7 @@ class MissionUseCasesTest : FreeSpec({
                         it.date,
                         it.typeOfWaste,
                         it.typeOfMission,
-                        listOf(MissionStep(collectionPointId, true))
+                        listOf(MissionStep(id, true))
                     )
                     else -> it
                 }

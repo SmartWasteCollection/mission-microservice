@@ -18,15 +18,15 @@ class MissionDigitalTwinManagerTest : FreeSpec({
     val manager = MissionDigitalTwinManager()
 
     val missionId = "MissionTest${System.currentTimeMillis()}"
-    val collectionPointId = "CollectionPointTest${System.currentTimeMillis()}"
+    val id = "CollectionPointTest${System.currentTimeMillis()}"
     val truckId = "TruckTest${System.currentTimeMillis()}"
 
-    val collectionPoint = BasicDigitalTwin(collectionPointId)
+    val collectionPoint = BasicDigitalTwin(id)
         .setMetadata(BasicDigitalTwinMetadata().setModelId("dtmi:swc:CollectionPoint;1"))
-        .addToContents("position", Position(0L, 0L))
+        .addToContents("position", Position(0.0, 0.0))
     val truck = BasicDigitalTwin(truckId)
         .setMetadata(BasicDigitalTwinMetadata().setModelId("dtmi:swc:Truck;1"))
-        .addToContents("position", Position(0L, 0L))
+        .addToContents("position", Position(0.0, 0.0))
         .addToContents("occupiedVolume", "{ \"value\": 0 }")
         .addToContents("capacity", 0)
         .addToContents("inMission", false)
@@ -35,14 +35,14 @@ class MissionDigitalTwinManagerTest : FreeSpec({
         truckId = null,
         typeOfWaste = TypeOfWaste(OrdinaryWaste.PAPER, WasteColor.BLUE),
         typeOfMission = TypeOfMission.ORDINARY,
-        missionSteps = listOf(MissionStep(collectionPointId))
+        missionSteps = listOf(MissionStep(id))
     )
 
     "The mission manager" - {
         "when communicating with Azure Digital Twins" - {
             "should create a digital twin with its relationships" {
                 manager.createDigitalTwin(truck).id shouldBe truckId
-                manager.createDigitalTwin(collectionPoint).id shouldBe collectionPointId
+                manager.createDigitalTwin(collectionPoint).id shouldBe id
                 manager.createMission(mission) shouldBe missionId
             }
             "should read digital twins" {
@@ -63,7 +63,7 @@ class MissionDigitalTwinManagerTest : FreeSpec({
                 manager.deleteMission(missionId) shouldBe toDelete
                 shouldNotThrow<Exception> {
                     manager.deleteDigitalTwin(truckId)
-                    manager.deleteDigitalTwin(collectionPointId)
+                    manager.deleteDigitalTwin(id)
                 }
             }
         }
