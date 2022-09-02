@@ -58,9 +58,9 @@ class MissionUseCasesTest : FreeSpec({
         )
     )
     val collectionPoints: List<CollectionPoint> = listOf(
-        CollectionPoint("cp1", Position(0, 0)),
-        CollectionPoint("cp2", Position(0, 0)),
-        CollectionPoint("cp3", Position(0, 0))
+        CollectionPoint("cp1", Position(0.0, 0.0)),
+        CollectionPoint("cp2", Position(0.0, 0.0)),
+        CollectionPoint("cp3", Position(0.0, 0.0))
     )
     val id = "collectionPoint"
     val typeOfWaste = TypeOfWaste(ExtraordinaryWaste.ELECTRONICS, WasteColor.NONE)
