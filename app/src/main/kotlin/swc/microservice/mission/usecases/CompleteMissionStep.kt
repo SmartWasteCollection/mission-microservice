@@ -13,6 +13,11 @@ class CompleteMissionStep(private val missionId: String) : MissionUseCase<Missio
                     manager.mission(TypeOfMission.ORDINARY).deleteMission(mission.missionId)
                     manager.mission(mission).createMission(mission)
                 }
+            }?.also { mission ->
+                if (mission.isCompleted() && !mission.truckId.isNullOrEmpty()) {
+                    manager.truck().assignTruck(it.truckId!!, false)
+                    manager.truck().occupiedVolume(0.0, mission.truckId!!)
+                }
             }
         }
 }

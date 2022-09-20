@@ -29,7 +29,9 @@ class MissionController(private val managerSupplier: ManagerSupplier = ManagerSu
 
     @PostMapping("/ordinary")
     fun generateOrdinaryMission(@RequestBody dumpsterId: String): String =
-        ComputeOrdinaryMission(dumpsterId).execute(managerSupplier)
+        ComputeOrdinaryMission(dumpsterId).execute(managerSupplier).also {
+            AssignTruckToMission(it).execute(managerSupplier)
+        }
 
     @PostMapping("/extraordinary")
     fun generateExtraordinaryMission(@RequestBody typeOfWaste: String): String =
@@ -38,8 +40,4 @@ class MissionController(private val managerSupplier: ManagerSupplier = ManagerSu
     @PutMapping("/{id}/step")
     fun missionStep(@PathVariable id: String): Mission<Waste>? =
         CompleteMissionStep(id).execute(managerSupplier)
-
-    @PutMapping("/{missionId}/truck")
-    fun assignTruck(@PathVariable missionId: String, @RequestBody truckId: String): Mission<Waste>? =
-        AssignTruckToMission(missionId, truckId).execute(managerSupplier)
 }

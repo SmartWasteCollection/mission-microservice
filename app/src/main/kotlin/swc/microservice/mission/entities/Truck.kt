@@ -1,9 +1,9 @@
 package swc.microservice.mission.entities
 
 data class Truck(
-    val id: String,
+    val truckId: String,
     val position: Position,
     val occupiedVolume: Volume,
     val capacity: Double,
-    val isInMission: Boolean = false
+    val inMission: Boolean = false
 )

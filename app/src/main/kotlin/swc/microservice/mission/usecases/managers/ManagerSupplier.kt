@@ -12,4 +12,6 @@ interface ManagerSupplier {
     fun dumpster(): DumpsterManager
 
     fun booking(): BookingManager
+
+    fun truck(): TruckManager
 }
