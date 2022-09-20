@@ -2,6 +2,7 @@ package swc.microservice.mission.usecases
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import swc.microservice.mission.drivers.http.HttpTruckManager
 import swc.microservice.mission.entities.Booking
 import swc.microservice.mission.entities.CollectionPoint
 import swc.microservice.mission.entities.Dimension
@@ -22,6 +23,7 @@ import swc.microservice.mission.usecases.managers.BookingManager
 import swc.microservice.mission.usecases.managers.DumpsterManager
 import swc.microservice.mission.usecases.managers.ManagerSupplier
 import swc.microservice.mission.usecases.managers.MissionManager
+import swc.microservice.mission.usecases.managers.TruckManager
 import java.time.LocalDate
 import java.util.UUID
 
@@ -135,6 +137,8 @@ class MissionUseCasesTest : FreeSpec({
         override fun dumpster(): DumpsterManager = dumpsterManager
 
         override fun booking(): BookingManager = bookingManager
+
+        override fun truck(): TruckManager = HttpTruckManager()
     }
 
     "When performing the mission use cases" - {
@@ -170,20 +174,6 @@ class MissionUseCasesTest : FreeSpec({
                 missions.find { it.missionId == missionId }?.typeOfMission shouldBe missionManager.getMissionById(missionId)?.typeOfMission
                 missions.find { it.missionId == missionId }?.typeOfWaste shouldBe missionManager.getMissionById(missionId)?.typeOfWaste
                 assert(missions.find { it.missionId == missionId }?.missionSteps?.first()?.completed ?: false)
-            }
-        }
-        "The AssignTruckToMission use case" - {
-            "should add the truck id to the mission" {
-                val missionId = missions.first().missionId
-                val truckId = "myTruck"
-                AssignTruckToMission(
-                    missionId,
-                    truckId
-                ).execute(supplier)?.truckId shouldBe truckId
-                missions.size shouldBe 2
-                missions.find { it.missionId == missionId }?.typeOfMission shouldBe missionManager.getMissionById(missionId)?.typeOfMission
-                missions.find { it.missionId == missionId }?.typeOfWaste shouldBe missionManager.getMissionById(missionId)?.typeOfWaste
-                missions.find { it.missionId == missionId }?.truckId shouldBe truckId
             }
         }
     }
