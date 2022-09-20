@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.11...v0.2.0) (2022-09-20)
+
+
+### Features
+
+* automate truck assignation and de-assignation ([2c90e3f](https://github.com/SmartWasteCollection/mission-microservice/commit/2c90e3fb26159118b607e5f197026f160c7af4bf))
+
 ## [0.1.11](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.1.10...v0.1.11) (2022-09-10)
 
 
