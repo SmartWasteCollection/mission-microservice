@@ -1,3 +1,10 @@
+## [0.2.4](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.3...v0.2.4) (2022-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.azure:azure-digitaltwins-core to v1.3.3 ([cc39679](https://github.com/SmartWasteCollection/mission-microservice/commit/cc39679cdefa198b59e7647bd31be4385e92e21b))
+
 ## [0.2.3](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.2...v0.2.3) (2022-10-09)
 
 
