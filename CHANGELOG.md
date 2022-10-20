@@ -1,3 +1,10 @@
+## [0.2.5](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.4...v0.2.5) (2022-10-20)
+
+
+### Bug Fixes
+
+* **deps:** update spring boot to v2.7.5 ([179db6c](https://github.com/SmartWasteCollection/mission-microservice/commit/179db6c7101c2bf2f20db2d519edaff88eac1c60))
+
 ## [0.2.4](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.3...v0.2.4) (2022-10-12)
 
 
