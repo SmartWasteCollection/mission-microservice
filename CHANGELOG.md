@@ -1,3 +1,10 @@
+## [0.2.6](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.5...v0.2.6) (2022-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update kotestversion to v5.5.2 ([785b089](https://github.com/SmartWasteCollection/mission-microservice/commit/785b0898d7c4dafebb71f3596c64617c32234244))
+
 ## [0.2.5](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.4...v0.2.5) (2022-10-20)
 
 
