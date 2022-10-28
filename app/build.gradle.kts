@@ -1,6 +1,6 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.jvm") version "1.7.20"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
