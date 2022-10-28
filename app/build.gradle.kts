@@ -25,7 +25,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
     implementation("com.azure:azure-digitaltwins-core:1.3.3")
     implementation("com.azure:azure-identity:1.5.3")
-    implementation("org.litote.kmongo:kmongo:4.7.1")
+    implementation("org.litote.kmongo:kmongo:4.7.2")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
