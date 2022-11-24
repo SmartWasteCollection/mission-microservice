@@ -1,3 +1,10 @@
+## [0.2.13](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.12...v0.2.13) (2022-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency io.github.cdimascio:dotenv-kotlin to v6.4.0 ([d26c38b](https://github.com/SmartWasteCollection/mission-microservice/commit/d26c38b597236355d6178c9366e24a9b6233dda0))
+
 ## [0.2.12](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.11...v0.2.12) (2022-11-22)
 
 
