@@ -23,7 +23,7 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.8")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
-    implementation("com.azure:azure-digitaltwins-core:1.3.5")
+    implementation("com.azure:azure-digitaltwins-core:1.3.6")
     implementation("com.azure:azure-identity:1.5.3")
     implementation("org.litote.kmongo:kmongo:4.8.0")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
