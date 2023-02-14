@@ -1,3 +1,10 @@
+## [0.2.24](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.23...v0.2.24) (2023-02-14)
+
+
+### Bug Fixes
+
+* **deps:** update spring boot to v3 ([6960fe6](https://github.com/SmartWasteCollection/mission-microservice/commit/6960fe673d43d70d4eef2de6258367cf60544ba6))
+
 ## [0.2.23](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.22...v0.2.23) (2023-02-07)
 
 
