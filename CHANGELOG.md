@@ -1,3 +1,10 @@
+## [0.2.30](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.29...v0.2.30) (2023-04-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.litote.kmongo:kmongo to v4.9.0 ([fdaad6c](https://github.com/SmartWasteCollection/mission-microservice/commit/fdaad6c013ff49ea632ee45dc71b03860c0cfbb4))
+
 ## [0.2.29](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.28...v0.2.29) (2023-04-03)
 
 
