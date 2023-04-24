@@ -1,3 +1,10 @@
+## [0.2.35](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.34...v0.2.35) (2023-04-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.fasterxml.jackson.module:jackson-module-kotlin to v2.15.0 ([9cd6107](https://github.com/SmartWasteCollection/mission-microservice/commit/9cd61075f1ba714ec47a599d633b067999549f2b))
+
 ## [0.2.34](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.33...v0.2.34) (2023-04-22)
 
 
