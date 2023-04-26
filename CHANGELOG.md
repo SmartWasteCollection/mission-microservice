@@ -1,3 +1,10 @@
+## [0.2.36](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.35...v0.2.36) (2023-04-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency jacoco to v0.8.10 ([615962d](https://github.com/SmartWasteCollection/mission-microservice/commit/615962d7170a6198085af1e4c4e45808ad0de441))
+
 ## [0.2.35](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.34...v0.2.35) (2023-04-24)
 
 
