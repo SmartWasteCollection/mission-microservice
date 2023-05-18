@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.1.0"
-    id("org.springframework.boot") version "3.0.6"
+    id("org.springframework.boot") version "3.0.7"
     jacoco
     application
 }
@@ -21,7 +21,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.0.6")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.0.7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.1")
     implementation("com.azure:azure-digitaltwins-core:1.3.8")
     implementation("com.azure:azure-identity:1.5.3")
