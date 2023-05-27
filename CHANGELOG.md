@@ -1,3 +1,10 @@
+## [0.2.42](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.41...v0.2.42) (2023-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.google.guava:guava to v32 ([198d0fe](https://github.com/SmartWasteCollection/mission-microservice/commit/198d0feea91866023280402214738f2ee2370e5a))
+
 ## [0.2.41](https://github.com/SmartWasteCollection/mission-microservice/compare/v0.2.40...v0.2.41) (2023-05-23)
 
 
