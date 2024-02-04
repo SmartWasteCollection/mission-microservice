@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.22"
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "11.1.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.6.1"
     id("org.springframework.boot") version "3.1.0"
     jacoco
     application
