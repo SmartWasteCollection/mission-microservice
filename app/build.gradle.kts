@@ -22,7 +22,7 @@ dependencies {
     implementation("com.google.guava:guava:32.0.1-jre")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.4")
     implementation("com.azure:azure-digitaltwins-core:1.3.9")
     implementation("com.azure:azure-identity:1.5.3")
     implementation("org.litote.kmongo:kmongo:4.9.0")
