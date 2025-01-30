@@ -20,7 +20,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.guava:guava:32.0.1-jre")
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
     implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
     implementation("com.azure:azure-digitaltwins-core:1.3.9")
